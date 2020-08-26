@@ -298,29 +298,29 @@ header .showTime {
     border-bottom: 1px dotted black;
 }
 
-.log1_b .tooltiptext {
-    /*visibility: hidden;*/
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -60px;
+/*.log1_b .tooltiptext {*/
+    /*!*visibility: hidden;*!*/
+    /*width: 120px;*/
+    /*background-color: black;*/
+    /*color: #fff;*/
+    /*text-align: center;*/
+    /*border-radius: 6px;*/
+    /*padding: 5px 0;*/
+    /*position: absolute;*/
+    /*z-index: 1;*/
+    /*bottom: 100%;*/
+    /*left: 50%;*/
+    /*margin-left: -60px;*/
 
-    /* 淡入 - 1秒内从 0% 到 100% 显示: */
-    opacity: 0;
-    transition: opacity 1s;
-}
+    /*!* 淡入 - 1秒内从 0% 到 100% 显示: *!*/
+    /*opacity: 0;*/
+    /*transition: opacity 1s;*/
+/*}*/
 
-.log1_b:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
+/*.log1_b:hover .tooltiptext {*/
+    /*visibility: visible;*/
+    /*opacity: 1;*/
+/*}*/
 
 #log3_form{
     position: relative;
@@ -469,11 +469,13 @@ button {
     height: 42px;
 }
 
+
+
 .bar7 input {
-    width: 300px;
-    border-radius: 42px;
-    border: 2px solid #324B4E;
-    background: #FFE4C4;
+    border-radius: 50px;
+    width: 350px;
+    height: 70px;
+    background: rgba(0, 0, 0, 0.5);
     transition: .3s linear;
     float: right;
 }
