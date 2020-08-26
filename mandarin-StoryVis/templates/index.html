@@ -260,73 +260,137 @@
 {#浮动窗口的位置#}
 <div id="log1"></div>
 <div id="login1">
-    <form action="" id = "log1_form">
+{#    <div action="" id = "log1_form">#}
+{##}
+{#        {% for f in range(0,imgs) %}#}
+{#            <button class="log1_b" name="test{{ f }}" id = 'log1_btn' value="{{ img_name[f] }}"><img id = "this_role" src="../static/img/{{ img_name[f] }}" height="100px"></button>#}
+{#        {% endfor %}#}
+{##}
+{#    </div>#}
 
-        {% for f in range(0,imgs) %}
-            <button class="log1_b" name="test{{ f }}" id = 'log1_btn' value="{{ img_name[f] }}"><img id = "this_role" src="../static/img/{{ img_name[f] }}" height="100px"></button>
-        {% endfor %}
 
-    </form>
+
+
+        <div class = "waterfall-height-css" >
+            <div class="image-box" v-for="img in imgList" :key="button">
+
+                {% for f in range(0,imgs) %}
+                    <button class="log1_b" name="test{{ f }}" id = 'log1_btn' value="{{ img_name[f] }}"><img id = "this_role" src="../static/img/{{ img_name[f] }}" height="100px"></button>
+                {% endfor %}
+
+            </div>
+        </div>
 
     <script type="text/javascript">
             $(document).ready(function() {
-
+                //获取原文本
                 var this_text = "{{ content }}";
-                // 点击图像更换文本内容主角为图像
+                //定义删除数组某元素方法
+                Array.prototype.indexOf = function(val) {
+                    for (var i = 0; i < this.length; i++) {
+                    if (this[i] == val) return i;
+                    }
+                    return -1;
+                    };
+                Array.prototype.remove = function(val) {
+                    var index = this.indexOf(val);
+                    if (index > -1) {
+                    this.splice(index, 1);
+                    }
+                    };
+                //创建数组，用于保存当前选中的主角
                 var selected =[];
                 $(".log1_b").click(function() {
-                    //console.log(selected);
-
                     //获取鼠标点击哪个button
                     var role_clicked = $(this).val();
+                    //如果角色button第2n次被选中
                     if (selected.includes(role_clicked)){
                         console.log(role_clicked+" Has already");
-                        selected.pop(role_clicked);
-                        console.log(selected)
-                        // 设定获取主角关键字的正则表达式
-                        var reg = new RegExp(role_clicked.split(".")[0], "gmi");
-
-                        //设定替换图像在文本中的内容
+                        //角色选中数组中移除该角色
+                        selected.remove(role_clicked);
+                        // 获取主角关键字
+                        var new_reg = role_clicked.split(".")[0]
+                        //获取角色图片的正则表达式
                         var replaced_cont = '<img src="../static/img/'+role_clicked+'" height="30px"> '
-                        var reg_count = this_text.match(reg);
-                        //使用正则方法将文本中的主角替换为图像
-                        this_text = this_text.replace( replaced_cont,reg )
-                        console.log(this_text);
+                        var new_replaced_cont = new RegExp(replaced_cont, "gmi");
+                        //使用正则表达式将文本中的角色图片部分替换为角色关键字
+                        this_text = this_text.replace(new_replaced_cont,new_reg)
+                        //console.log(this_text);
                         //刷新局部文本框
-
+                        $("#text_content").html(this_text);
                         // 保证不刷新页面，只刷新局部文本狂
                         return false
 
-
-                    } else{
+                    } else{ ////如果角色button第1n次被选中
                         selected.push(role_clicked);
-
                         // 设定获取主角关键字的正则表达式
                         var reg = new RegExp(role_clicked.split(".")[0], "gmi");
-
-                        // 获取当前故事文本
-                        {#var this_text = "{{ content }}";#}
-
                         //设定替换图像在文本中的内容
                         var replaced_cont = '<img src="../static/img/'+role_clicked+'" height="30px"> '
                         var reg_count = this_text.match(reg);
                         //使用正则方法将文本中的主角替换为图像
                         this_text = this_text.replace(reg, replaced_cont)
-
-                        console.log(reg_count.length);
                         //刷新局部文本框
-                        //$(this).tooltip("worked");
                         $("#text_content").html(this_text);
-                        // 保证不刷新页面，只刷新局部文本狂
+                        // 保证不刷新页面，只刷新局部文本内容
                         return false
                     }
-
                  });
                 // 点击空白处恢复文本内容
-                 $("#log1_form").click(function() {
-                     var this_text = "{{ content }}";
-                     $("#text_content").html(this_text);
+                 $(".waterfall-height-css").click(function() {
+                     var new_text = "{{ content }}";
+                     $("#text_content").html(new_text);
                   });
+                 $(".log1_b").hover(function() {
+                     $(this).html(
+                         "<span class=\"tooltiptext\">提示文本</span>"
+                     );
+                     $(this).css({
+                         .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+
+    /* 淡入 - 1秒内从 0% 到 100% 显示: */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+                     })
+                    //获取鼠标点击哪个button
+                    var role_hovered = $(this).val();
+                    console.log("worked:",role_hovered);
+
+                    });
+                 {#$(".log1_b").mouseout(function() {#}
+                 {#    $(this).css({#}
+                 {#        "width":"auto",#}
+                 {#        "height":"auto",#}
+                 {#    });#}
+                 {#   //获取鼠标点击哪个button#}
+                 {#   //var role_hovered = $(this).val();#}
+                 {#   console.log("mouseout");#}
+                 {##}
+                 {#   });#}
             })
         </script>
 </div>

@@ -269,6 +269,19 @@ header .showTime {
     height: 700px;
     margin: 0 auto;
 }
+#this_role:hover{
+    /*悬停时变大*/
+    transform:scale(1.5);
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.04);
+
+}
+.waterfall-height-css {
+    column-count: 3;
+    column-gap: 10px;
+    }
+
+
 #log1_btn{
     height: auto;
     width: auto;
@@ -278,17 +291,12 @@ header .showTime {
     background: rgba(255, 255, 255, 0.04);
 
 }
-#log1_form{
-    position: relative;
-    width: 6.75rem;
-    margin: auto;
-    background: rgba(255, 255, 255, 0.04);
 
-}
+
 #log3_form{
     position: relative;
     width: auto;
-    margin: 10;
+    margin:10;
     font-size: xxx-large;
 }
 #login3{
