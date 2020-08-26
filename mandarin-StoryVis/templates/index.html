@@ -1,0 +1,1587 @@
+{#<!DOCTYPE html>#}
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>文本推送可视化</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layui.css') }}">
+    <script src="{{ url_for('static',filename='js/flexible.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/echarts.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/echarts-wordcloud.js') }}"></script>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <script>
+        {#    词性条形图循环#}
+{#        条形图搜索框初始值为空#}
+        var gldata = "";
+        {#条形图搜索框初始高亮页数为空#}
+        var cldata = "";
+        {#条形图初始页数分为10页#}
+        var YEDATA = "10"
+        {#条形图初始按字分页为空#}
+        var ZIDATA = ""
+        {#初始故事名字#}
+        var TITLE = "狐狸和乌鸦的故事"
+        var SEAR = "3"
+
+        var emphasisStyle = {
+            itemStyle: {
+                barBorderWidth: 50,
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                shadowColor: 'rgba(0,0,0,0.5)',
+                barBorderRadius:10,
+            }
+        };
+
+        {#条形可视化数据#}
+        var pronames = [{
+            name: "词性分布",
+            //图类型饼图
+            type: "pie",
+            {#设计扇形图中间小圈的大小#}
+            radius: ["2%", "35%"],
+            {#设计扇形图的位置#}
+            center: ['84%', '35%'],
+
+            roseType: "radius",
+            // 图形的文字标签
+            label: {
+                fontSize: 15
+            },
+            // 链接图形和文字的线条
+            labelLine: {
+                // length 链接图形的线条
+                length: 6,
+                // length2 链接文字的线条
+                length2: 8
+            },
+            //调的数据库里面数据
+            {#扇形图数据#}
+            data: [{% for f in range(0,length_p) %} {
+                value:{{ pro_num[f] }},
+                name: '{{ pro_name[f] }}'
+            },{% endfor %}]
+        },
+            {#条形图数据#}
+            {% for f in range(0,len_fen_xi_v) %} {
+            {#数据名字#}
+            name: '{{ fenye_pages_xi_k[f] }}',
+            type: 'bar',
+            stack: 'one',
+            {#数据值#}
+            data: {{ fenye_pages_xi_v[f] }},
+            emphasis: emphasisStyle,
+            {#数据颜色#}
+            color: '{{ pn_color[f] }}',
+            itemStyle: {
+                normal: {
+                    color: function (param) {
+                        {#高亮颜色#}
+                        return (param['name'] == cldata && param['seriesName'] == gldata) ? 'rgb(255,0,0)' : '{{ pn_color[f] }}'
+                    }
+                }
+            },
+        },{% endfor %}]
+        {#词性图的图例数据#}
+        var length_name = [{% for f in range(0,len_fen_xi_v) %} '{{ fenye_pages_xi_k[f] }}',{% endfor %}];
+        {#情感词的分页数据#}
+        var fenye = [{% for f in range(0,len_fen) %} {{ fenye_pages[f] }},{% endfor %}];
+        {#情感词分页的长度#}
+        var fenye_len = fenye[0].length + 1;
+
+        {#            data_pro将接收到词性的数据，通过循环做成饼图的数据格式#}
+        var data_pro = [{% for f in range(0,length_p) %} {
+            value:{{ pro_num[f] }},
+            name: '{{ pro_name[f] }}'
+        },{% endfor %}];
+        {#词性配色#}
+        var data_color = [{% for f in range(0,length_p) %} '{{ pn_color[f] }}',{% endfor %}];
+
+        {#            data_entropy将接收到熵值，通过循环做成雷达图的数据格式#}
+        var data_entropy = [{% for f in range(0,5) %} {{ entropy_num[f] }},{% endfor %}];
+        {#做公式条形图数据#}
+        var readability_1 = [
+            {% for f in range(0,1) %}, {{readability_num_1[f] }},{{readability_num_1[f] }}, {% endfor %}];
+        var readability_2 = [
+            {% for f in range(0,1) %} ,{{readability_num_2[f] }},{{readability_num_2[f] }},{% endfor %}];
+        var readability_3 = [
+            {% for f in range(0,1) %} {{readability_num_3[f] }},,,{{readability_num_3[f] }},{% endfor %}];
+        var readability_4 = [{% for f in range(0,1) %},,, {{readability_num_4[f] }},{% endfor %}];
+        var readability_5 = [{% for f in range(0,1) %} ,,,{{readability_num_5[f] }},{% endfor %}];
+        var readability_6 = [
+            {% for f in range(0,1) %} {{readability_num_6[f] }},,{{readability_num_6[f] }},{% endfor %}];
+        var readability_7 = [{% for f in range(0,1) %} ,{{readability_num_7[f] }},{% endfor %}];
+        var readability_8 = [{% for f in range(0,1) %} ,{{readability_num_8[f] }},{% endfor %}];
+        var readability_9 = [{% for f in range(0,1) %} {{readability_num_9[f] }},{% endfor %}];
+
+        {#            di_1将接收到情感词色彩的数据，通过循环做成饼图的数据格式#}
+        var di_1 = [{% for k, v in dict2.items() %}{% for i in v %}{% set Tnum = loop.index0 %}
+            {
+                name: "{{i}}",
+                itemStyle: {
+                    {% for j in tcolor %}
+                        {% if Tnum == loop.index0 %}
+                            color: "{{ tcolor[Tnum]}}"
+                        {% endif %}
+                    {% endfor %}},
+                children: [{% for n in dict3[i] %}
+                    {
+                        name: "{{ n }}",
+                        value: 1,
+                        itemStyle: {
+                            color: '#79CBCA'
+                        }
+                    }, {% endfor %}]
+            }, {% endfor %} {% endfor %}];
+        {#            di_2将接收到情感词色彩的数据，通过循环做成饼图的数据格式#}
+        var di_2 = [{% for a, b in dict1.items() %}{% for c in b %}{% set Fnum = loop.index0 %}
+            {
+                name: "{{ c }}", itemStyle: {
+                    {% for m in fcolor %}
+                        {% if Fnum == loop.index0 %}
+                            color: "{{ fcolor[Fnum]}}"
+                        {% endif %}
+                    {% endfor %}},
+                children: [{% for x in dict4[c] %}
+                    {
+                        name: "{{ x }}",
+                        value: 1,
+                        itemStyle: {
+                            color: '#f8b500'
+                        }
+                    }, {% endfor %}]
+            }, {% endfor %} {% endfor %}];
+        {#照片数据#}
+        var img_na = [{% for f in range(0,imgs) %} '<img src="../static/img/{{ img_name[f] }}">',{% endfor %}];
+        {#情感词的配色数据#}
+        var fc = [{% for f in range(0,20) %} '{{ all_color[f] }}',{% endfor %}];
+
+    </script>
+
+</head>
+<body>
+<!-- 头部的盒子 -->
+<header>
+    <br>
+    <h1>文本推送</h1>
+    <div class="showTime"></div>
+    <script>
+        var t = null;
+        t = setTimeout(time, 1000); //开始运行
+        function time() {
+            clearTimeout(t); //清除定时器
+            dt = new Date();
+            var y = dt.getFullYear();
+            var mt = dt.getMonth() + 1;
+            var day = dt.getDate();
+            var h = dt.getHours(); //获取时
+            var m = dt.getMinutes(); //获取分
+            var s = dt.getSeconds(); //获取秒
+            document.querySelector(".showTime").innerHTML =
+                "当前时间：" + y + "年" + mt + "月" + day + "-" + h + "时" + m + "分" + s + "秒";
+            t = setTimeout(time, 1000); //设定定时器，循环运行
+        }
+    </script>
+</header>
+
+<!-- 页面主体部分 -->
+<section class="mainbox">
+    <div class="column">
+        <div class="panel bar" id="b1">
+            <h2 >文本相关主角</h2>
+            <div class="chart">
+                {% for f in range(0,imgs) %}
+                    <img src="../static/img/{{ img_name[f] }}" height="80px">
+                {% endfor %}
+            </div>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel line" id="l1">
+
+            <h2>故事摘要</h2>
+            <div class="chart"><br>
+                <p style="color:#000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从前，韩国有位歌唱家名叫韩娥，要到位于东方的齐国去，不想在半路上就断了钱粮，从而使基本生活都发生了困难。人们发现之后，急急忙忙分头去追赶她，将她请回来，再为劳苦大众纵情高歌一曲。</p>
+            </div>
+
+            <div class="panel-footer"></div>
+        </div>
+
+        <div class="panel pie" id="p1">
+            <h2>文本易读性公式分析</h2>
+            <div class="chart">图表</div>
+            <div class="panel-footer"></div>
+        </div>
+    </div>
+
+    <div class="column">
+        {#        搜索框#}
+        <div class="search bar7">
+            <form action="/" method="post">
+                <input type="text" id="title" placeholder="    今天想给宝宝讲什么样的故事呢？" name="crid">
+                <button type="submit" id="loginBtn"></button>
+            </form>
+            <br><br>
+        </div>
+        <h1 style="text-align: center;font-size: 28px;">{{ title }}</h1>
+        {#        原文框#}
+        <div class=text_con><br><br><br>
+
+            <h2 style="color:#000">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;故事内容：</h2><br>
+            <div class="nui-scroll" id="pretime">
+                <p id="text_content" style="color:#000000;font-size:0.3rem;">{{ content }}</p>
+                {#                <p>&nbsp;&nbsp;&nbsp;&nbsp;从前，韩国有位歌唱家名叫韩娥，要到位于东方的齐国去，不想在半路上就断了钱粮，从而使基本生活都发生了困难。为了度过这一难关，她在经过齐国都城西边的雍门时，便用卖唱来换取食物。韩娥唱起歌来，情感是相当投入的，以至在她离开了这个地方以后，她那美妙绝伦的余音还仿佛在城门的梁柱之间缭绕，竟至三日不绝于耳；凡是聆听过韩娥歌唱的人，都还沉浸在她所营造的艺术氛围之中，好像她并没有离开一样。有一天，韩娥来到一家旅店投宿时，店小二狗眼看人，见她穷愁潦倒，便当众羞辱她。韩娥为此伤心至极，禁不住拖着长音痛哭不已。她那哭声弥漫开去，竟使得方圆一里之内的人们，无论男女老幼都为之动容，大家泪眼相向，愁眉不展，人人都难过得三天吃不下饭。后来，韩娥难以安身，便离开了这家旅店。人们发现之后，急急忙忙分头去追赶她，将她请回来，再为劳苦大众纵情高歌一曲。韩娥的热情演唱，又引得一里之内的老人和小孩个个欢呼雀跃，鼓掌助兴，大家忘情地沉浸在欢乐之中，将以往的许多人生悲苦都一扫而光。为了感谢韩娥给他们带来的欢乐，大家送给韩娥许多财物和礼品，使她满载而归。韩娥的故事说明：真正的艺术家，应当扎根于人民大众之中，与大众共悲欢，成为他们忠实的代言人。</p>#}
+            </div>
+        </div>
+    </div>
+    <!-- 中间空白的地方，也是浮动窗口定位的地方 -->
+    <div class="map"></div>
+
+    <div class="column">
+        <div class="panel bar2" id="b2">
+            <h2>文本情感词分析</h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel line2" id="l2">
+            <h2>文本特征熵分析</h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel pie2" id="p2">
+            <h2>文本重要词性分布</h2>
+            <div class="chart">图表</div>
+            <div class="panel-footer"></div>
+        </div>
+    </div>
+</section>
+{#浮动窗口的位置#}
+<div id="log1"></div>
+<div id="login1">
+    <form action="" id = "log1_form">
+
+        {% for f in range(0,imgs) %}
+            <button class="log1_b" name="test{{ f }}" id = 'log1_btn' value="{{ img_name[f] }}"><img id = "this_role" src="../static/img/{{ img_name[f] }}" height="100px"></button>
+        {% endfor %}
+
+    </form>
+
+    <script type="text/javascript">
+            $(document).ready(function() {
+
+                var this_text = "{{ content }}";
+                // 点击图像更换文本内容主角为图像
+                var selected =[];
+                $(".log1_b").click(function() {
+                    //console.log(selected);
+
+                    //获取鼠标点击哪个button
+                    var role_clicked = $(this).val();
+                    if (selected.includes(role_clicked)){
+                        console.log(role_clicked+" Has already");
+                        selected.pop(role_clicked);
+                        console.log(selected)
+                        // 设定获取主角关键字的正则表达式
+                        var reg = new RegExp(role_clicked.split(".")[0], "gmi");
+
+                        //设定替换图像在文本中的内容
+                        var replaced_cont = '<img src="../static/img/'+role_clicked+'" height="30px"> '
+                        var reg_count = this_text.match(reg);
+                        //使用正则方法将文本中的主角替换为图像
+                        this_text = this_text.replace( replaced_cont,reg )
+                        console.log(this_text);
+                        //刷新局部文本框
+
+                        // 保证不刷新页面，只刷新局部文本狂
+                        return false
+
+
+                    } else{
+                        selected.push(role_clicked);
+
+                        // 设定获取主角关键字的正则表达式
+                        var reg = new RegExp(role_clicked.split(".")[0], "gmi");
+
+                        // 获取当前故事文本
+                        {#var this_text = "{{ content }}";#}
+
+                        //设定替换图像在文本中的内容
+                        var replaced_cont = '<img src="../static/img/'+role_clicked+'" height="30px"> '
+                        var reg_count = this_text.match(reg);
+                        //使用正则方法将文本中的主角替换为图像
+                        this_text = this_text.replace(reg, replaced_cont)
+
+                        console.log(reg_count.length);
+                        //刷新局部文本框
+                        //$(this).tooltip("worked");
+                        $("#text_content").html(this_text);
+                        // 保证不刷新页面，只刷新局部文本狂
+                        return false
+                    }
+
+                 });
+                // 点击空白处恢复文本内容
+                 $("#log1_form").click(function() {
+                     var this_text = "{{ content }}";
+                     $("#text_content").html(this_text);
+                  });
+            })
+        </script>
+</div>
+<div id="log2">
+</div>
+{#情感词搜索框#}
+<div id="login2wear">
+    <div class="login2top select">
+        <select class="sea" name="sea">
+{#            开始默认搜索的是按页#}
+            <option value="1" selected>按页查</option>
+            <option value="2">按字查</option>
+        </select>
+{#        选择循环的页数#}
+        <input class="titleData" type="hidden" name="title" value="{{ title }}">
+        <select class="yeData" name="ye">
+            <option value="5">5</option>
+{#            初始值默认为10页#}
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+{#        选择按字分的页数#}
+        <select class="ziData" name="zi">
+{#            默认初始值为第一个值#}
+            <option value="{{ all_num[0] }}" selected>{{ all_num[0] }}</option>
+            <option value="{{ all_num[1] }}">{{ all_num[1] }}</option>
+            <option value="{{ all_num[2] }}">{{ all_num[2] }}</option>
+            <option value="{{ all_num[3] }}">{{ all_num[3] }}</option>
+            <option value="{{ all_num[4] }}">{{ all_num[4] }}</option>
+        </select>
+        <br>
+        <button class="btnYe">查询</button>
+        <button class="btnZi">查询</button>
+
+    </div>
+
+    <div id="login2">
+        <form action=""></form>
+    </div>
+</div>
+{#浮窗左二#}
+<div id="log3"></div>
+<div id="login3">
+
+    <form action="" id = "log3_form"><h2>故事摘要</h2>从前，韩国有位歌唱家名叫韩娥，要到位于东方的齐国去，不想在半路上就断了钱粮，从而使基本生活都发生了困难。人们发现之后，急急忙忙分头去追赶她，将她请回来，再为劳苦大众纵情高歌一曲。</form>
+</div>
+{#浮窗右二#}
+<div id="log4"></div>
+<div id="login4">
+    <form action=""></form>
+</div>
+{#浮窗左三#}
+<div id="log5"></div>
+<div id="login5">
+    <h2>文本易读性公式分析</h2>
+    <form action=""></form>
+</div>
+{#浮窗右三#}
+<div id="log6">
+</div>
+{#词性选择框#}
+<div id="login6wear">
+    <div class="login6top select">
+        <select class="sea2" name="seaxi">
+{#            默认按页查#}
+            <option value="3" selected>按页查</option>
+            <option value="4">按字查</option>
+        </select>
+{#        选择按照多少页查#}
+        <input class="titleDataxi2" type="hidden" name="title" value="{{ title }}">
+        <select class="yeDataxi2" name="yexi">
+            <option value="5">5</option>
+{#            默认为10页#}
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+{#        选择按字分页#}
+        <select class="ziDataxi2" name="zixi">
+{#            默认初始值为第一个值#}
+            <option value="{{ all_num[0] }}" selected>{{ all_num[0] }}</option>
+            <option value="{{ all_num[1] }}">{{ all_num[1] }}</option>
+            <option value="{{ all_num[2] }}">{{ all_num[2] }}</option>
+            <option value="{{ all_num[3] }}">{{ all_num[3] }}</option>
+            <option value="{{ all_num[4] }}">{{ all_num[4] }}</option>
+        </select>
+{#        高亮词搜索#}
+        <div class="search-g">
+            <input class="searchg" type="text" name="search-g">
+            <button id="btn" class="btn-search">搜索</button>
+        </div>
+        <br>
+{#        字页搜索#}
+        <button class="btnYexi2">查询</button>
+        <button class="btnZixi2">查询</button>
+    </div>
+
+    <div id="login6">
+        <form action=""></form>
+    </div>
+</div>
+
+s<!-- 先引入jquery -->
+<script src="{{ url_for('static',filename='js/jquery.js') }}"></script>
+<script src="{{ url_for('static',filename='js/index.js') }}"></script>
+{#实现条形图用户选择#}
+<script>
+    $(function () {
+        var sea = $(".sea").val()
+        {#console.log(sea);#}
+{#        情感词按页分#}
+        if (sea == 1) {
+            $('.ziData').hide()
+            $('.btnZi').hide()
+            $('.yeData').show()
+            $('.btnYe').show()
+        {#    情感词按字分#}
+        } else if (sea == 2) {
+            $('.yeData').hide()
+            $('.btnYe').hide()
+            $('.ziData').show()
+            $('.btnZi').show()
+        } else {
+        }
+        $(".sea").change(function () {
+            sea = $(".sea").val()
+            console.log("6666" + sea);
+            if (sea == 1) {
+                $('.ziData').hide()
+                $('.btnZi').hide()
+                $('.yeData').show()
+                $('.btnYe').show()
+            } else if (sea == 2) {
+                $('.yeData').hide()
+                $('.btnYe').hide()
+                $('.ziData').show()
+                $('.btnZi').show()
+
+            } else {
+                $('.yeDataxi').hide()
+                $('.btnYexi').hide()
+                $('.ziDataxi').show()
+                $('.btnZixi').show()
+                $(".btnZixi").click(function () {
+                    var titleDataxi = $(".titleDataxi").val()
+                    var ziDataxi = $('.ziDataxi').val()
+                    console.log(titleDataxi);
+                    console.log(ziDataxi);
+                    $.post("http://127.0.0.1:5000/fenxizi", {'title': titleDataxi, 'zixi': ziDataxi}, function (data) {
+                        console.log("4.." + data);
+                        fenzixi = JSON.parse(data)
+                        fenzi_lenxi = fenzixi[0].length + 1;
+                        // 基于准备好的dom，初始化echarts实例
+                        var myChart = echarts.init(document.getElementById('login6'));
+
+                        // 指定图表的数据
+                        var xAxisData = [];
+                        for (var i = 1; i < fenzi_len; i++) {
+                            xAxisData.push('Page' + i);
+                        }
+                        var option = {
+                            color: data_color,
+                            backgroundColor: '#eee',
+                            legend: {
+                                data: length_name,
+                                left: 10,
+                                orient: 'vertical',
+                                itemGap: 0,
+                                icon: 'rect',
+                            },
+                            tooltip: {},
+                            xAxis: {
+                                data: xAxisData,
+                                name: '页数',
+                                axisLine: {onZero: true},
+                                splitLine: {show: false},
+                                splitArea: {show: false}
+                            },
+                            yAxis: {
+                                // inverse: true,
+                                splitArea: {show: false}
+                            },
+                            grid: {
+
+                                right: '40%',
+                                bottom: 100,
+                            },
+
+                            series: pronames,
+                        };
+
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
+                        //让图表跟随屏幕自动的去适应
+                        window.addEventListener("resize", function () {
+                            myChart.resize();
+                        });
+                    })
+                })
+            }
+
+        })
+        $(".btnYe").click(function () {
+            var titleData = $(".titleData").val()
+            var yeData = $(".yeData").val()
+            $.post("http://127.0.0.1:5000/fenye", {'title': titleData, 'ye': yeData}, function (data) {
+                console.log("1.." + data);
+                fenye = JSON.parse(data)
+                fenye_len = fenye[0].length + 1;
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('login2'));
+                var data = [
+                    {
+                        name: '正面词性',
+                        //正面词性区域的颜色
+                        itemStyle: {
+                            color: '#E684AE'
+                        },
+                        //di_1是正面词跟颜色
+                        children: di_1
+                    },
+                    {
+                        name: '负面词性',
+                        //负面词性区域的颜色
+                        itemStyle: {
+                            color: '#77A1D3'
+                        },
+                        //di_2是负面词跟颜色
+                        children: di_2
+                    }];
+                // 指定图表的数据
+                var xAxisData = [];
+                for (var i = 1; i < fenye_len; i++) {
+                    xAxisData.push('Page' + i);
+                }
+                console.log(xAxisData);
+                var option = {
+                    backgroundColor: '#eee',
+                    legend: {
+                        data: ['赞扬', '快乐', '尊敬', '喜爱', '相信', '惊奇',
+                            '思念', '安心', '祝愿', '贬责', '烦闷', '憎恶',
+                            '悲伤', '恐惧', '内疚', '慌张', '失望', '害羞',
+                            '妒忌', '怀疑'],
+                        left: 10
+                    },
+                    tooltip: {},
+                    xAxis: {
+                        data: xAxisData,
+                        name: '页数',
+                        axisLine: {onZero: true},
+                        splitLine: {show: false},
+                        splitArea: {show: false}
+                    },
+                    yAxis: {
+                        {#inverse: true,#}
+                        splitArea: {show: false}
+                    },
+                    grid: {
+
+                        right: '35%',
+                        bottom: 100,
+                    },
+                    series: [
+                        {
+                            center: ['84%', '25%'],
+                            //图表类型为旭日图
+                            type: 'sunburst',
+                            //当鼠标悬停不相关扇形块的配置
+                            highlightPolicy: 'ancestor',
+                            data: data,
+                            //圆角半径
+                            //radius: [0, '95%'],
+                            //扇形根据数据value的排序方式，desc为降序排序，asc为升序排序，null为不排序
+                            sort: null,
+                            //对层的配置
+                            levels: [{}, {
+                                //第一层的圆心角度
+                                r0: '5%',
+                                r: '10%',
+                                //这块的设置
+                                itemStyle: {
+                                    //边框线宽
+                                    borderWidth: 2
+                                },
+                                label: {
+                                    //标签旋转。从 -90 度到 90 度。正值是逆时针。
+                                    rotate: 'tangential'
+                                }
+                            }, {
+                                //第二层的圆心角度
+                                r0: '5%',
+                                r: '30%',
+                                label: {
+                                    //标签位置靠右
+                                    align: 'right'
+                                }
+                            }, {
+                                //第三层的圆心角度
+                                r0: '30%',
+                                r: '32%',
+                                label: {
+                                    position: 'outside',
+                                    padding: 3,
+                                    //是否静态无法交互
+                                    silent: false
+                                },
+                                itemStyle: {
+                                    borderWidth: 3
+                                }
+                            }]
+                        },
+                        {
+                            name: '赞扬',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[0],
+                            color: fc[3],
+                        },
+                        {
+                            name: '快乐',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[1],
+                            color: fc[4],
+                        },
+                        {
+                            name: '尊敬',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[2],
+                            color: fc[7],
+                        },
+                        {
+                            name: '喜爱',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[3],
+                            color: fc[5],
+                        },
+                        {
+                            name: '相信',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[4],
+                            color: fc[11],
+                        },
+                        {
+                            name: '惊奇',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[5],
+                            color: fc[12],
+                        },
+                        {
+                            name: '思念',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[6],
+                            color: fc[10],
+                        },
+                        {
+                            name: '安心',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[7],
+                            color: fc[6],
+                        },
+                        {
+                            name: '祝愿',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[8],
+                            color: fc[8],
+                        },
+                        {
+                            name: '贬责',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[9],
+                            color: fc[1],
+                        },
+                        {
+                            name: '烦闷',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[10],
+                            color: fc[2],
+                        },
+                        {
+                            name: '憎恶',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[11],
+                            color: fc[18],
+                        },
+                        {
+                            name: '悲伤',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[12],
+                            color: fc[0],
+                        },
+                        {
+                            name: '恐惧',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[13],
+                            color: fc[16],
+                        },
+                        {
+                            name: '内疚',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[14],
+                            color: fc[14],
+                        },
+                        {
+                            name: '慌张',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[15],
+                            color: fc[15],
+                        },
+                        {
+                            name: '失望',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[16],
+                            color: fc[13],
+                        },
+                        {
+                            name: '害羞',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[17],
+                            color: fc[17],
+                        },
+                        {
+                            name: '妒忌',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[18],
+                            color: fc[19],
+                        },
+                        {
+                            name: '怀疑',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenye[19],
+                            color: fc[9],
+                        },
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+                //让图表跟随屏幕自动的去适应
+                window.addEventListener("resize", function () {
+                    myChart.resize();
+                });
+            })
+        })
+        $(".btnZi").click(function () {
+            var titleData = $(".titleData").val()
+            var ziData = $('.ziData').val()
+            console.log(titleData);
+            console.log(ziData);
+            $.post("http://127.0.0.1:5000/fenci", {'title': titleData, 'zi': ziData}, function (data) {
+                console.log("2.." + data);
+                fenzi = JSON.parse(data)
+                fenzi_len = fenzi[0].length + 1;
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('login2'));
+                var data = [
+                    {
+                        name: '正面词性',
+                        //正面词性区域的颜色
+                        itemStyle: {
+                            color: '#E684AE'
+                        },
+                        //di_1是正面词跟颜色
+                        children: di_1
+                    },
+                    {
+                        name: '负面词性',
+                        //负面词性区域的颜色
+                        itemStyle: {
+                            color: '#77A1D3'
+                        },
+                        //di_2是负面词跟颜色
+                        children: di_2
+                    }];
+                // 指定图表的数据
+                var xAxisData = [];
+                for (var i = 1; i < fenzi_len; i++) {
+                    xAxisData.push('Page' + i);
+                }
+                var option = {
+                    backgroundColor: '#eee',
+                    legend: {
+                        data: ['赞扬', '快乐', '尊敬', '喜爱', '相信', '惊奇',
+                            '思念', '安心', '祝愿', '贬责', '烦闷', '憎恶',
+                            '悲伤', '恐惧', '内疚', '慌张', '失望', '害羞',
+                            '妒忌', '怀疑'],
+                        left: 10
+                    },
+                    tooltip: {},
+                    xAxis: {
+                        data: xAxisData,
+                        name: '页数',
+                        axisLine: {onZero: true},
+                        splitLine: {show: false},
+                        splitArea: {show: false}
+                    },
+                    yAxis: {
+                        {#inverse: true,#}
+                        splitArea: {show: false}
+                    },
+                    grid: {
+
+                        right: '35%',
+                        bottom: 100,
+                    },
+
+                    series: [
+                        {
+                            center: ['84%', '25%'],
+                            //图表类型为旭日图
+                            type: 'sunburst',
+                            //当鼠标悬停不相关扇形块的配置
+                            highlightPolicy: 'ancestor',
+                            data: data,
+                            //圆角半径
+                            //radius: [0, '95%'],
+                            //扇形根据数据value的排序方式，desc为降序排序，asc为升序排序，null为不排序
+                            sort: null,
+                            //对层的配置
+                            levels: [{}, {
+                                //第一层的圆心角度
+                                r0: '5%',
+                                r: '10%',
+                                //这块的设置
+                                itemStyle: {
+                                    //边框线宽
+                                    borderWidth: 2
+                                },
+                                label: {
+                                    //标签旋转。从 -90 度到 90 度。正值是逆时针。
+                                    rotate: 'tangential'
+                                }
+                            }, {
+                                //第二层的圆心角度
+                                r0: '5%',
+                                r: '30%',
+                                label: {
+                                    //标签位置靠右
+                                    align: 'right'
+                                }
+                            }, {
+                                //第三层的圆心角度
+                                r0: '30%',
+                                r: '32%',
+                                label: {
+                                    position: 'outside',
+                                    padding: 3,
+                                    //是否静态无法交互
+                                    silent: false
+                                },
+                                itemStyle: {
+                                    borderWidth: 3
+                                }
+                            }]
+                        },
+                        {
+                            name: '赞扬',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[0],
+                            color: fc[3],
+                        },
+                        {
+                            name: '快乐',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[1],
+                            color: fc[4],
+                        },
+                        {
+                            name: '尊敬',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[2],
+                            color: fc[7],
+                        },
+                        {
+                            name: '喜爱',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[3],
+                            color: fc[5],
+                        },
+                        {
+                            name: '相信',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[4],
+                            color: fc[11],
+                        },
+                        {
+                            name: '惊奇',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[5],
+                            color: fc[12],
+                        },
+                        {
+                            name: '思念',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[6],
+                            color: fc[10],
+                        },
+                        {
+                            name: '安心',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[7],
+                            color: fc[6],
+                        },
+                        {
+                            name: '祝愿',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[8],
+                            color: fc[8],
+                        },
+                        {
+                            name: '贬责',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[9],
+                            color: fc[1],
+                        },
+                        {
+                            name: '烦闷',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[10],
+                            color: fc[2],
+                        },
+                        {
+                            name: '憎恶',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[11],
+                            color: fc[18],
+                        },
+                        {
+                            name: '悲伤',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[12],
+                            color: fc[0],
+                        },
+                        {
+                            name: '恐惧',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[13],
+                            color: fc[16],
+                        },
+                        {
+                            name: '内疚',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[14],
+                            color: fc[14],
+                        },
+                        {
+                            name: '慌张',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[15],
+                            color: fc[15],
+                        },
+                        {
+                            name: '失望',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[16],
+                            color: fc[13],
+                        },
+                        {
+                            name: '害羞',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[17],
+                            color: fc[17],
+                        },
+                        {
+                            name: '妒忌',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[18],
+                            color: fc[19],
+                        },
+                        {
+                            name: '怀疑',
+                            type: 'bar',
+                            stack: 'one',
+                            data: fenzi[19],
+                            color: fc[9],
+                        },
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+                //让图表跟随屏幕自动的去适应
+                window.addEventListener("resize", function () {
+                    myChart.resize();
+                });
+            })
+        })
+    })
+    {#词性的用户选择#}
+    $(function () {
+        var seaxi = $(".sea2").val()
+        if (seaxi == 3) {
+            {#用户选择按页分的时候,字选项就隐藏#}
+            $(".ziDataxi2").hide()
+            $(".btnZixi2").hide()
+            {#用户选择按页分的时候,页选项就显示#}
+            $(".yeDataxi2").show()
+            $(".btnYexi2").show()
+        } else {
+            {#用户选择按字分的时候,字选项就显示#}
+            $(".ziDataxi2").show()
+            $(".btnZixi2").show()
+            {#用户选择按字分的时候,页选项就隐藏#}
+            $(".yeDataxi2").hide()
+            $(".btnYexi2").hide()
+        }
+        $(".sea2").change(function () {
+            seaxi = $(".sea2").val()
+            if (seaxi == 3) {
+                $(".ziDataxi2").hide()
+                $(".btnZixi2").hide()
+                $(".yeDataxi2").show()
+                $(".btnYexi2").show()
+            } else {
+                $(".ziDataxi2").show()
+                $(".btnZixi2").show()
+                $(".yeDataxi2").hide()
+                $(".btnYexi2").hide()
+            }
+        })
+        $(".btnYexi2").click(function () {
+            {#以下都是初始值#}
+            gldata = "";
+            cldata = "";
+            var yeDa = $(".yeDataxi2").val()
+            var title2 = $(".titleDataxi2").val()
+            SEAR = 3
+            YEDATA = yeDa
+            TITLE = title2
+            ZIDATA=""
+            {#词性按页分的可视化#}
+            $.post("http://127.0.0.1:5000/fenxi", {"yexi": yeDa, "title": title2}, function (data) {
+                fenyexi = JSON.parse(data)
+                fenye_lenxi = fenyexi[0].length + 1;
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('login6'));
+                // 指定图表的数据
+                var xAxisData = [];
+                for (var i = 1; i < fenye_lenxi; i++) {
+                    xAxisData.push('Page' + i);
+                }
+                console.log(xAxisData);
+                var option = {
+                    color: data_color,
+                    backgroundColor: '#eee',
+                    legend: {
+                        data: length_name,
+                        left: 10,
+                        orient: 'vertical',
+                        itemGap: 0,
+                        icon: 'rect',
+                    },
+                    tooltip: {},
+                    xAxis: {
+                        data: xAxisData,
+                        name: '页数',
+                        axisLine: {onZero: true},
+                        splitLine: {show: false},
+                        splitArea: {show: false}
+                    },
+                    yAxis: {
+                        // inverse: true,
+                        splitArea: {show: false}
+                    },
+                    grid: {
+
+                        right: '40%',
+                        bottom: 100,
+                    },
+
+                    series: [{
+                        name: "词性分布",
+                        //图类型饼图
+                        type: "pie",
+                        radius: ["2%", "35%"],
+                        center: ['84%', '25%'],
+                        //扇区圆心角展现数据的百分比
+                        roseType: "radius",
+                        // 图形的文字标签
+                        label: {
+                            fontSize: 15
+                        },
+                        // 链接图形和文字的线条
+                        labelLine: {
+                            // length 链接图形的线条
+                            length: 6,
+                            // length2 链接文字的线条
+                            length2: 8
+                        },
+                        //调数据
+                        data: [
+                                {% for f in range(0,length_p) %}{value:{{ pro_num[f] }},name: '{{ pro_name[f] }}'
+                                    },{% endfor %}
+                        ],
+                        emphasis: emphasisStyle,
+                    },
+                        {% for f in range(0,len_fen_xi_v) %}
+                            {
+                                name: '{{ fenye_pages_xi_k[f] }}',
+                                type: 'bar',
+                                stack: 'one',
+                                data: fenyexi['{{f}}'],
+                                color: '{{ pn_color[f] }}'
+                            },
+                        {% endfor %}
+                    ]
+
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+                //让图表跟随屏幕自动的去适应
+                window.addEventListener("resize", function () {
+                    myChart.resize();
+                });
+
+            })
+
+        })
+        {#词性按字分的可视化#}
+        $(".btnZixi2").click(function () {
+            gldata = "";
+            cldata = "";
+            var ziDa = $(".ziDataxi2").val()
+            var title2 = $(".titleDataxi2").val()
+            SEAR = 4
+            ZIDATA = ziDa
+            TITLE = title2
+        YEDATA=""
+            $.post("http://127.0.0.1:5000/fenxizi", {"zixi": ziDa, "title": title2}, function (data) {
+                fenyexi = JSON.parse(data)
+                fenye_lenxi = fenyexi[0].length + 1;
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('login6'));
+                // 指定图表的数据
+                var xAxisData = [];
+                for (var i = 1; i < fenye_lenxi; i++) {
+                    xAxisData.push('Page' + i);
+                }
+
+                var option = {
+                    color: data_color,
+                    backgroundColor: '#eee',
+                    legend: {
+                        data: length_name,
+                        left: 10,
+                        orient: 'vertical',
+                        itemGap: 0,
+                        icon: 'rect',
+                    },
+                    tooltip: {},
+                    xAxis: {
+                        data: xAxisData,
+                        name: '页数',
+                        axisLine: {onZero: true},
+                        splitLine: {show: false},
+                        splitArea: {show: false}
+                    },
+                    yAxis: {
+                        // inverse: true,
+                        splitArea: {show: false}
+                    },
+                    grid: {
+
+                        right: '40%',
+                        bottom: 100,
+                    },
+
+                    series: [{
+                        name: "词性分布",
+                        //图类型饼图
+                        type: "pie",
+                        radius: ["2%", "35%"],
+                        center: ['84%', '25%'],
+                        //扇区圆心角展现数据的百分比
+                        roseType: "radius",
+                        // 图形的文字标签
+                        label: {
+                            fontSize: 15
+                        },
+                        // 链接图形和文字的线条
+                        labelLine: {
+                            // length 链接图形的线条
+                            length: 6,
+                            // length2 链接文字的线条
+                            length2: 8
+                        },
+                        //调的数据
+                        data: [
+                                {% for f in range(0,length_p) %}{value:{{ pro_num[f] }},name: '{{ pro_name[f] }}'
+                                    },{% endfor %}
+                        ],
+                        emphasis: emphasisStyle,
+                    },
+                        {% for f in range(0,len_fen_xi_v) %}
+                            {
+                                name: '{{ fenye_pages_xi_k[f] }}',
+                                type: 'bar',
+                                stack: 'one',
+                                data: fenyexi['{{f}}'],
+                                emphasis: emphasisStyle,
+
+                                color: '{{ pn_color[f] }}'
+                            },
+                        {% endfor %}
+                    ]
+
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+                //让图表跟随屏幕自动的去适应
+                window.addEventListener("resize", function () {
+                    myChart.resize();
+                });
+
+            })
+        })
+
+    })
+    {#搜索关键词#}
+    $(function () {
+        $("#btn").click(function () {
+
+            {#搜索后返回结果#}
+            $.post("http://127.0.0.1:5000/an", {
+                "searchg": $(".searchg").val(),
+                "all_page": YEDATA,
+                "zi_page": ZIDATA,
+                "title": TITLE
+            }, function (e) {
+                //console.log(e.data);
+
+                if (e.code==500){
+                    {#查不到这个词的提示#}
+                    alert("没有这个词")
+                    return
+                }
+                var idx = [];
+                gldata = e.data.lenthe;
+
+                cldata = e.data.page;
+
+                for (let i = 0; i < cldata.length; i++) {
+                    var x = parseInt(cldata[i])-1
+                    console.log(x)
+                    idx.push(x)
+                };
+                console.log(idx)
+
+
+
+                {#条形图按字分的高亮位置#}
+                if (SEAR == 3) {
+
+                    $.post("http://127.0.0.1:5000/fenxi", {"yexi": YEDATA, "title": TITLE}, function (data) {
+
+                        fenyexi = JSON.parse(data)
+                        fenye_lenxi = fenyexi[0].length + 1;
+                        // 基于准备好的dom，初始化echarts实例
+                        var myChart = echarts.init(document.getElementById('login6'));
+                        // 指定图表的数据
+                        var xAxisData = [];
+                        for (var i = 1; i < fenye_lenxi; i++) {
+                            xAxisData.push('Page' + i);
+                        }
+
+                        var option = {
+                            color: data_color,
+                            backgroundColor: '#eee',
+                            legend: {
+                                data: length_name,
+                                left: 10,
+                                orient: 'vertical',
+                                itemGap: 0,
+                                icon: 'rect',
+                            },
+                            tooltip: {},
+                            xAxis: {
+                                data: xAxisData,
+                                name: '页数',
+                                axisLine: {onZero: true},
+                                splitLine: {show: false},
+                                splitArea: {show: false}
+                            },
+                            yAxis: {
+                                // inverse: true,
+                                splitArea: {show: false}
+                            },
+                            grid: {
+
+                                right: '40%',
+                                bottom: 100,
+                            },
+
+                            series: [{
+                                name: "词性分布",
+                                //图类型饼图
+                                type: "pie",
+                                radius: ["2%", "35%"],
+                                center: ['84%', '25%'],
+                                //扇区圆心角展现数据的百分比
+                                roseType: "radius",
+                                // 图形的文字标签
+                                label: {
+                                    fontSize: 15
+                                },
+                                // 链接图形和文字的线条
+                                labelLine: {
+                                    // length 链接图形的线条
+                                    length: 6,
+                                    // length2 链接文字的线条
+                                    length2: 8
+                                },
+                                data: [
+                                        {% for f in range(0,length_p) %}{value:{{ pro_num[f] }},name: '{{ pro_name[f] }}'
+                                            },{% endfor %}
+                                ],
+                                emphasis: emphasisStyle,
+                            },
+                                {% for f in range(0,len_fen_xi_v) %}
+                                    {
+                                        name: '{{ fenye_pages_xi_k[f] }}',
+                                        type: 'bar',
+                                        stack: 'one',
+                                        data: fenyexi['{{f}}'],
+                                        //emphasis: emphasisStyle,
+                                        color: '{{ pn_color[f] }}',
+                                        itemStyle: {
+                                            normal: {
+                                                color: '{{ pn_color[f] }}'
+                                            }
+                                        },
+                                        barWidth: '75%', // 控制柱子的宽度
+
+                                    },
+                                {% endfor %},
+                                {% for f in range(0,len_fen_xi_v) %}
+                                    {
+                                        name: '{{ fenye_pages_xi_k[f] }}',
+                                        type: 'bar',
+                                        stack: 'tw',
+                                        data: fenyexi['{{f}}'],
+                                        emphasis: emphasisStyle,
+                                        color: '{{ pn_color[f] }}',
+                                        itemStyle: {
+                                            normal: {
+                                                color: function (param) {
+                                                    var flag = false
+                                                    for (let i = 0; i < cldata.length; i++) {
+                                                        if ("Page" + cldata[i] == param["name"]) flag = true;
+                                                    }
+                                                    return (flag && param['seriesName'] == gldata) ? '{{ pn_color[f] }}' : 'rgba(237,125,49, 0)'
+                                                }
+                                            }
+                                        },
+                                        barGap: '-120%', // 控制柱子的间隔
+                                        barWidth: '110%', // 控制柱子的宽度
+
+                                    },
+                                {% endfor %}
+                            ]
+
+                        };
+
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
+
+                        // 高亮那一个
+                        myChart.dispatchAction({
+                            type: 'highlight',
+                            seriesName:gldata,
+                            dataIndex:idx,
+
+                        });
+
+                        //让图表跟随屏幕自动的去适应
+                        window.addEventListener("resize", function () {
+                            myChart.resize();
+                        });
+
+                    })
+
+                } else {
+
+                    {#条形图按字分的高亮位置#}
+                    $.post("http://127.0.0.1:5000/fenxizi", {"zixi": ZIDATA, "title": TITLE}, function (data) {
+                        fenyexi = JSON.parse(data)
+                        fenye_lenxi = fenyexi[0].length + 1;
+                        // 基于准备好的dom，初始化echarts实例
+                        var myChart = echarts.init(document.getElementById('login6'));
+                        // 指定图表的数据
+                        var xAxisData = [];
+                        for (var i = 1; i < fenye_lenxi; i++) {
+                            xAxisData.push('Page' + i);
+                        }
+
+                        var option = {
+                            color: data_color,
+                            backgroundColor: '#eee',
+                            legend: {
+                                data: length_name,
+                                left: 10,
+                                orient: 'vertical',
+                                itemGap: 0,
+                                icon: 'rect',
+                            },
+                            tooltip: {},
+                            xAxis: {
+                                data: xAxisData,
+                                name: '页数',
+                                axisLine: {onZero: true},
+                                splitLine: {show: false},
+                                splitArea: {show: false}
+                            },
+                            yAxis: {
+                                // inverse: true,
+                                splitArea: {show: false}
+                            },
+                            grid: {
+
+                                right: '40%',
+                                bottom: 100,
+                            },
+
+                            series: [{
+                                name: "词性分布",
+                                //图类型饼图
+                                type: "pie",
+                                radius: ["2%", "35%"],
+                                center: ['84%', '25%'],
+                                //扇区圆心角展现数据的百分比
+                                roseType: "radius",
+                                // 图形的文字标签
+                                label: {
+                                    fontSize: 15
+                                },
+                                // 链接图形和文字的线条
+                                labelLine: {
+                                    // length 链接图形的线条
+                                    length: 6,
+                                    // length2 链接文字的线条
+                                    length2: 8
+                                },
+
+                                data: [
+                                        {% for f in range(0,length_p) %}{value:{{ pro_num[f] }},name: '{{ pro_name[f] }}'
+                                            },{% endfor %}
+                                ],
+                                emphasis: emphasisStyle,
+                            },
+                                {% for f in range(0,len_fen_xi_v) %}
+                                    {
+                                        name: '{{ fenye_pages_xi_k[f] }}',
+                                        type: 'bar',
+                                        stack: 'one',
+                                        data: fenyexi['{{f}}'],
+                                        //emphasis: emphasisStyle,
+                                        color: '{{ pn_color[f] }}',
+                                        itemStyle: {
+                                            normal: {
+                                                color: '{{ pn_color[f] }}'
+                                            }
+                                        },
+                                        barWidth: '75%', // 控制柱子的宽度
+                                    },
+                                {% endfor %}
+                                {% for f in range(0,len_fen_xi_v) %}
+                                    {
+                                        name: '{{ fenye_pages_xi_k[f] }}',
+                                        type: 'bar',
+                                        stack: 'tw',
+                                        data: fenyexi['{{f}}'],
+                                        emphasis: emphasisStyle,
+                                        color: '{{ pn_color[f] }}',
+                                        itemStyle: {
+                                            normal: {
+                                                color: function (param) {
+                                                    var flag = false
+                                                    for (let i = 0; i < cldata.length; i++) {
+                                                        if ("Page" + cldata[i] == param["name"]) flag = true;
+
+                                                    }
+                                                    return (flag && param['seriesName'] == gldata) ? '{{ pn_color[f] }}' : 'rgba(237,125,49, 0)'
+                                                }
+                                            }
+                                        },
+                                        barGap: '-120%', // 控制柱子的间隔
+                                        barWidth: '110%', // 控制柱子的宽度
+                                    },
+                                {% endfor %}
+                            ]
+
+                        };
+
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
+                        myChart.dispatchAction({
+                            type: 'highlight',
+                            seriesName:gldata,
+                            dataIndex:idx,
+                         });
+                        //让图表跟随屏幕自动的去适应
+                        window.addEventListener("resize", function () {
+                            myChart.resize();
+                        });
+
+                    })
+
+                }
+
+            });
+
+        })
+    })
+
+
+</script>
+</body>
+</html>
