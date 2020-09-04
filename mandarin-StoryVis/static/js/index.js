@@ -307,75 +307,7 @@
 })();
 
 //右二可视化
-(function () {
-// 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.querySelector(".line2 .chart"));
-    // 指定图表的配置项和数据
-    option = {
 
-        //提示框组件
-        tooltip: {},
-        //雷达图的坐标系组件
-        radar: {
-            name: {
-                //字体设置
-                textStyle: {
-                    color: '#fff',
-                    backgroundColor: '#999',
-                    //富文本标签
-                    borderRadius: 1,
-                    //文字块的内边距[上，右，下，左]
-                    padding: [1, 2]
-                }
-            },
-            //雷达图的指示器，用来指定雷达图中的多个维度
-            indicator: [
-                {name: '情感度信息熵', max: 1},
-                {name: '词性信息熵', max: 1},
-                //重要性信息熵这个维度
-                {name: '重要性信息熵', max: 1},
-                {name: '笔画数信息熵', max: 1},
-                {name: '笔画大于16的笔画', max: 0.12},
-            ],
-            center: ['50%', '60%'],
-             splitArea: {
-                areaStyle: {
-                    color: ['rgba(114, 172, 209, 0.2)',
-                        'rgba(114, 172, 209, 0.4)', 'rgba(114, 172, 209, 0.6)',
-                        'rgba(114, 172, 209, 0.8)', 'rgba(114, 172, 209, 1)'],
-                    shadowColor: 'rgba(0, 0, 0, 0.3)',
-                    shadowBlur: 10
-                }
-            },
-        },
-        //整体数据设置
-        series: [
-            {
-            type: 'radar',
-            //提示框组件
-            tooltip: {
-                //触发类型： item数据项图形触发，主要在散点图，饼图等无类目轴的图表中使用。
-                //触发类型： axis坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用。
-                //触发类型： none是什么也不触发
-                trigger: 'item'
-            },
-            //展现变化趋势
-            areaStyle: {},
-            data: [
-                {
-                    //数据库调数据
-                    value: data_entropy,
-                },
-            ]
-        }]
-    };
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-//让图表跟随屏幕自动的去适应
-    window.addEventListener("resize", function () {
-        myChart.resize();
-    });
-})();
 
 //右三可视化
 (function () {
@@ -913,74 +845,6 @@ option = {
     });
 })();
 // 右二的浮窗可视化
-(function () {
-// 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('login4'));
-    // 指定图表的配置项和数据
-    option = {
-        title: {
-            text: '信息熵雷达图'
-        },
-        //提示框组件
-         tooltip: {},
-        radar: {
-            name: {
-                //字体设置
-                textStyle: {
-                    color: '#fff',
-                    backgroundColor: '#999',
-                    //富文本标签
-                    borderRadius: 3,
-                    //字体块内部间距[上，右，下，左]
-                    padding: [3, 5]
-                }
-            },
-            //雷达图的指示器，用来指定雷达图中的多个维度
-            indicator: [
-                {name: '情感度信息熵', max: 1},
-                {name: '词性信息熵', max: 1},
-                //重要性信息熵这个维度
-                {name: '重要性信息熵', max: 1},
-                {name: '笔画数信息熵', max: 1},
-                {name: '笔画大于16的笔画', max: 0.12},
-            ],
-             splitArea: {
-                areaStyle: {
-                    color: ['rgba(255,228,181, 0.2)',
-                        'rgba(255,228,181, 0.4)', 'rgba(255,228,181, 0.6)',
-                        'rgba(255,228,181, 0.8)', 'rgba(255,228,181, 1)'],
-                    shadowColor: 'rgba(0, 0, 0, 0.3)',
-                    shadowBlur: 10
-                }
-            },
-        },
-        //整体数据设置
-        series: [{
-            type: 'radar',
-            //提示框组件
-            tooltip: {
-                //触发类型： item数据项图形触发，主要在散点图，饼图等无类目轴的图表中使用。
-                //触发类型： axis坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用。
-                //触发类型： none是什么也不触发
-                trigger: 'item'
-            },
-            //展现变化趋势
-            areaStyle: {},
-            data: [
-                {
-                    //data_entropy=[情感度信息熵,词性信息熵,重要性信息熵,笔画数信息熵,笔画大于16的笔画]
-                    value: data_entropy,
-                },
-            ]
-        }]
-    };
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-//让图表跟随屏幕自动的去适应
-    window.addEventListener("resize", function () {
-        myChart.resize();
-    });
-})();
 
 //右三的浮窗可视化
 (function () {
@@ -1091,31 +955,31 @@ for (var i = 1; i < 11; i++) {
             $('login2wear').style.display = 'none';
             document.getElementsByClassName("login2top")[0].style.display = 'none';
         };
-        $('l1').onclick = function () {
-            //显示面板和蒙版
-            $('log3').style.display = 'block';
-            $('login3').style.display = 'block';
-            //隐藏滚动条
-            document.body.style.overflow = 'hidden';
-            // console.log('Worked')
-        };
-        $('log3').onclick = function () {
-            //隐藏面板和蒙版
-            $('log3').style.display = 'none';
-            $('login3').style.display = 'none';
-        };
-        $('l2').onclick = function () {
-            //显示面板和蒙版
-            $('log4').style.display = 'block';
-            $('login4').style.display = 'block';
-            //隐藏滚动条
-            document.body.style.overflow = 'hidden';
-        };
-        $('log4').onclick = function () {
-            //隐藏面板和蒙版
-            $('log4').style.display = 'none';
-            $('login4').style.display = 'none';
-        };
+        // $('l1').onclick = function () {
+        //     //显示面板和蒙版
+        //     $('log3').style.display = 'block';
+        //     $('login3').style.display = 'block';
+        //     //隐藏滚动条
+        //     document.body.style.overflow = 'hidden';
+        //     // console.log('Worked')
+        // };
+        // $('log3').onclick = function () {
+        //     //隐藏面板和蒙版
+        //     $('log3').style.display = 'none';
+        //     $('login3').style.display = 'none';
+        // };
+        // $('l2').onclick = function () {
+        //     //显示面板和蒙版
+        //     $('log4').style.display = 'block';
+        //     $('login4').style.display = 'block';
+        //     //隐藏滚动条
+        //     document.body.style.overflow = 'hidden';
+        // };
+        // $('log4').onclick = function () {
+        //     //隐藏面板和蒙版
+        //     $('log4').style.display = 'none';
+        //     $('login4').style.display = 'none';
+        // };
         $('p1').onclick = function () {
             //显示面板和蒙版
             $('log5').style.display = 'block';

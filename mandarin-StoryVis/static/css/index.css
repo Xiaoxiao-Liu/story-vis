@@ -70,10 +70,11 @@ header .showTime {
 .panel {
     position: relative;
     height: 3.875rem;
-    border: 1px solid rgba(25, 186, 139, 0.17);
+    border: 1px solid #02a6b5;
     background: rgba(255, 255, 255, 0.04) url(../images/line.png);
-    padding: 0 0.1875rem 0.5rem;
-    margin-bottom: 0.1875rem;
+    padding: 0 0.8rem 5rem;
+
+    margin-bottom: 1.18rem;
 }
 
 .panel::before {
@@ -83,8 +84,8 @@ header .showTime {
     content: "";
     width: 10px;
     height: 10px;
-    border-top: 2px solid #02a6b5;
-    border-left: 2px solid #02a6b5;
+    /*border-top: 2px solid #02a6b5;*/
+    /*border-left: 2px solid #02a6b5;*/
 }
 
 .panel::after {
@@ -94,8 +95,8 @@ header .showTime {
     content: "";
     width: 10px;
     height: 10px;
-    border-top: 2px solid #02a6b5;
-    border-right: 2px solid #02a6b5;
+    /*border-top: 2px solid #02a6b5;*/
+    /*border-right: 2px solid #02a6b5;*/
 }
 
 .panel .panel-footer {
@@ -112,8 +113,8 @@ header .showTime {
     content: "";
     width: 10px;
     height: 10px;
-    border-bottom: 2px solid #02a6b5;
-    border-left: 2px solid #02a6b5;
+    /*border-bottom: 2px solid #02a6b5;*/
+    /*border-left: 2px solid #02a6b5;*/
 }
 
 .panel .panel-footer::after {
@@ -123,8 +124,8 @@ header .showTime {
     content: "";
     width: 10px;
     height: 10px;
-    border-bottom: 2px solid #02a6b5;
-    border-right: 2px solid #02a6b5;
+    /*border-bottom: 2px solid #02a6b5;*/
+    /*border-right: 2px solid #02a6b5;*/
 }
 
 .panel h2 {
@@ -264,32 +265,35 @@ header .showTime {
     /*background-image: url("../images/mapbg.jpg");*/
     animation: rotate1 10s linear infinite;
 }
-.text_con{
+
+.text_con {
     width: 480px;
     height: 700px;
     margin: 0 auto;
 }
-#this_role:hover{
+
+#this_role:hover {
     /*悬停时变大*/
-    transform:scale(1.5);
+    transform: scale(1.5);
     padding: 10px;
     background: rgba(255, 255, 255, 0.04);
 
 }
+
 .waterfall-height-css {
     column-count: 3;
     column-gap: 10px;
-    }
+}
 
 
-#log1_btn{
+#log1_btn {
     height: auto;
     width: auto;
     cursor: pointer;
     position: relative;
     padding: 10px;
     background: rgba(255, 255, 255, 0.04);
-
+    border: black;
 }
 
 .tooltip {
@@ -299,36 +303,37 @@ header .showTime {
 }
 
 /*.log1_b .tooltiptext {*/
-    /*!*visibility: hidden;*!*/
-    /*width: 120px;*/
-    /*background-color: black;*/
-    /*color: #fff;*/
-    /*text-align: center;*/
-    /*border-radius: 6px;*/
-    /*padding: 5px 0;*/
-    /*position: absolute;*/
-    /*z-index: 1;*/
-    /*bottom: 100%;*/
-    /*left: 50%;*/
-    /*margin-left: -60px;*/
+/*!*visibility: hidden;*!*/
+/*width: 120px;*/
+/*background-color: black;*/
+/*color: #fff;*/
+/*text-align: center;*/
+/*border-radius: 6px;*/
+/*padding: 5px 0;*/
+/*position: absolute;*/
+/*z-index: 1;*/
+/*bottom: 100%;*/
+/*left: 50%;*/
+/*margin-left: -60px;*/
 
-    /*!* 淡入 - 1秒内从 0% 到 100% 显示: *!*/
-    /*opacity: 0;*/
-    /*transition: opacity 1s;*/
+/*!* 淡入 - 1秒内从 0% 到 100% 显示: *!*/
+/*opacity: 0;*/
+/*transition: opacity 1s;*/
 /*}*/
 
 /*.log1_b:hover .tooltiptext {*/
-    /*visibility: visible;*/
-    /*opacity: 1;*/
+/*visibility: visible;*/
+/*opacity: 1;*/
 /*}*/
 
-#log3_form{
+#log3_form {
     position: relative;
     width: auto;
-    margin:10;
+    margin: 10;
     font-size: xxx-large;
 }
-#login3{
+
+#login3 {
     width: 40%;
     height: 65%;
     border: 19px solid rgba(25, 186, 139, 0.17);
@@ -340,7 +345,8 @@ header .showTime {
     background: rgba(255, 255, 255, 1) url(../images/line.png);
 
 }
-#login1{
+
+#login1 {
     width: 40%;
     height: 65%;
     border: 19px solid rgba(25, 186, 139, 0.17);
@@ -364,10 +370,11 @@ header .showTime {
     display: none;
     margin: -6.8rem 0 0 -7.5rem;
 }
-#login2,#login6 {
+
+#login2, #login6 {
     width: 15rem;
     height: 10rem;
-    background-color: rgba(255, 255, 255,0.8);
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 0.0625rem;
     position: absolute;
     left: 50%;
@@ -376,21 +383,22 @@ header .showTime {
     margin: -6.8rem 0 0 -7.5rem;
 
 }
+
 /*#login1,#login3{*/
-    /*width: 15rem;*/
-    /*height: 10rem;*/
-    /*background-color: rgba(255, 255, 255, 0.8);*/
-    /*border-radius: 0.0625rem;*/
-    /*position: absolute;*/
-    /*left: 50%;*/
-    /*top: 70%;*/
-    /*display: none;*/
-    /*margin: -6.8rem 0 0 -7s.5rem;*/
+/*width: 15rem;*/
+/*height: 10rem;*/
+/*background-color: rgba(255, 255, 255, 0.8);*/
+/*border-radius: 0.0625rem;*/
+/*position: absolute;*/
+/*left: 50%;*/
+/*top: 70%;*/
+/*display: none;*/
+/*margin: -6.8rem 0 0 -7s.5rem;*/
 /*}*/
-#login2wear,#login6wear {
+#login2wear, #login6wear {
     width: 15rem;
     height: 11.2rem;
-    background-color: rgba(255, 255, 255,0.8);
+    background-color: rgba(255, 255, 255, 0.8);
     background-color: #eee;
     border-radius: 0.0625rem;
     position: absolute;
@@ -404,7 +412,7 @@ header .showTime {
 #logs {
     width: 15rem;
     /*height: 10rem;*/
-    background-color: rgba(255, 255, 255,0.8);
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 0.0625rem;
     position: absolute;
     left: 50%;
@@ -413,7 +421,7 @@ header .showTime {
     margin: -6.8rem 0 0 -7.5rem;
 }
 
-#log1,#log3{
+#log1, #log3 {
     width: 100%;
     height: 100%;
     background-color: #000000;
@@ -424,7 +432,7 @@ header .showTime {
     display: none;
 }
 
- #log2, #log4, #log5, #log6 {
+#log2, #log4, #log5, #log6 {
     width: 100%;
     height: 100%;
     background-color: #000000;
@@ -470,12 +478,12 @@ button {
 }
 
 
-
 .bar7 input {
     border-radius: 50px;
-    width: 350px;
+    border: 36px solid #EEEEEE;
+    width: 305px;
     height: 70px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgb(255, 255, 255);
     transition: .3s linear;
     float: right;
 }
@@ -492,80 +500,93 @@ button {
 
 .bar7 button:before {
     content: "Search";
+    font-size: 10;
     font-family: FontAwesome;
     color: #324b4e;
 }
-.highlight{
-            background-color: yellow;
-        }
+
+.highlight {
+    background-color: yellow;
+}
+
+
 .nui-scroll {
-                        border: 1px solid #000;
-                        width: 550px;
-                        height: 500px;
-                        overflow: auto;
-                  }
+    border: 1px solid #00000036;
+    width: 550px;
+    height: 85px;
+    overflow: auto;
 
-                  .nui-scroll::-webkit-scrollbar {
-                        width: 8px;
-                        height: 8px;
-                  }
-                  /*正常情况下滑块的样式*/
+}
 
-                  .nui-scroll::-webkit-scrollbar-thumb {
-                        background-color: rgba(0, 0, 0, .05);
-                        border-radius: 10px;
-                        -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);
-                  }
-                  /*鼠标悬浮在该类指向的控件上时滑块的样式*/
+.nui-scroll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
 
-                  .nui-scroll:hover::-webkit-scrollbar-thumb {
-                        background-color: rgba(0, 0, 0, .2);
-                        border-radius: 10px;
-                        -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);
-                  }
-                  /*鼠标悬浮在滑块上时滑块的样式*/
+/*正常情况下滑块的样式*/
 
-                  .nui-scroll::-webkit-scrollbar-thumb:hover {
-                        background-color: rgba(0, 0, 0, .4);
-                        -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);
-                  }
-                  /*正常时候的主干部分*/
+.nui-scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .05);
+    border-radius: 10px;
+    -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);
+}
 
-                  .nui-scroll::-webkit-scrollbar-track {
-                        border-radius: 10px;
-                        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
-                        background-color: white;
-                  }
-                  /*鼠标悬浮在滚动条上的主干部分*/
+/*鼠标悬浮在该类指向的控件上时滑块的样式*/
 
-                  .nui-scroll::-webkit-scrollbar-track:hover {
-                        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .4);
-                        background-color: rgba(0, 0, 0, .01);
-                  }
+.nui-scroll:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 10px;
+    -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);
+}
+
+/*鼠标悬浮在滑块上时滑块的样式*/
+
+.nui-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, .4);
+    -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);
+}
+
+/*正常时候的主干部分*/
+
+.nui-scroll::-webkit-scrollbar-track {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+    background-color: white;
+}
+
+/*鼠标悬浮在滚动条上的主干部分*/
+
+.nui-scroll::-webkit-scrollbar-track:hover {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .4);
+    background-color: rgba(0, 0, 0, .01);
+}
 
 
-.select{
+.select {
     margin-left: 3%;
     margin-top: 1.8%;
 
 }
 
-.btnYe ,.btnZi{
+.btnYe, .btnZi {
     margin-top: .5px;
     height: 20px;
     width: 109px;
 }
-.search-g{
+
+.search-g {
     position: absolute;
-left: 4rem;
-top: 0.3rem;
+    left: 4rem;
+    top: 0.3rem;
 }
-.search-g input{
+
+.search-g input {
     height: 18px;
     display: inline;
     width: 130px;
 }
-.search-g button{
+
+.search-g button {
     height: 18px;
     display: inline
 }

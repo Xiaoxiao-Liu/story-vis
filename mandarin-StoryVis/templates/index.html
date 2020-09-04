@@ -202,18 +202,9 @@
             <h2 >文本相关主角</h2>
             <div class="chart">
                 {% for f in range(0,imgs) %}
-                    <img src="../static/img/{{ img_name[f] }}" height="80px">
+                    <img src="../static/img/{{ img_name[f] }}" height="55px">
                 {% endfor %}
             </div>
-            <div class="panel-footer"></div>
-        </div>
-        <div class="panel line" id="l1">
-
-            <h2>故事摘要</h2>
-            <div class="chart"><br>
-                <p style="color:#000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从前，韩国有位歌唱家名叫韩娥，要到位于东方的齐国去，不想在半路上就断了钱粮，从而使基本生活都发生了困难。人们发现之后，急急忙忙分头去追赶她，将她请回来，再为劳苦大众纵情高歌一曲。</p>
-            </div>
-
             <div class="panel-footer"></div>
         </div>
 
@@ -303,11 +294,15 @@
         </div>
         <h1 style="text-align: center;font-size: 28px;">{{ title }}</h1>
         {#        原文框#}
-        <div class=text_con><br><br><br>
+        <div class=text_con style="position: relative;"><br><br><br>
+            <div class="baba1" style="cursor: pointer;display: inline;color: #000;position: absolute;left: 230px;top: 170px;">阅读全文&nbsp;<img style="height: 10px;width: 10px;" src="../static/images/jiantouxia.png"></div>
+            <div class="baba2" style="cursor: pointer;display: none;color: #000;position: absolute;left: 230px;top: 585px;">收起&nbsp;<img style="height: 10px;width: 10px;" src="../static/images/jiantousahng.png"></div>
 
-            <h2 style="color:#000">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;故事内容：</h2><br>
-            <div class="nui-scroll" id="pretime">
-                <p id="text_content" style="color:#000000;font-size:0.3rem;">{{ content }}</p>
+            <h2 style="color:#000; ">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;故事内容：</h2><br>
+            <div class="nui-scroll"  id="pretime">
+                <p id="text_content_init" style="color:#000000;font-size:0.3rem;  display: block;">从前有一只狐狸,一直住在一座高山的洞穴里,在孤寂冷漠中艰难地苦度晚年.它生育出来的小狐狸,每当发育成熟时,都被它当作.....</p>
+                <p id="text_content" style="color:#000000;font-size:0.3rem; display: none;padding-bottom: 10px">{{ content }}</p>
+
                 {#                <p>&nbsp;&nbsp;&nbsp;&nbsp;从前，韩国有位歌唱家名叫韩娥，要到位于东方的齐国去，不想在半路上就断了钱粮，从而使基本生活都发生了困难。为了度过这一难关，她在经过齐国都城西边的雍门时，便用卖唱来换取食物。韩娥唱起歌来，情感是相当投入的，以至在她离开了这个地方以后，她那美妙绝伦的余音还仿佛在城门的梁柱之间缭绕，竟至三日不绝于耳；凡是聆听过韩娥歌唱的人，都还沉浸在她所营造的艺术氛围之中，好像她并没有离开一样。有一天，韩娥来到一家旅店投宿时，店小二狗眼看人，见她穷愁潦倒，便当众羞辱她。韩娥为此伤心至极，禁不住拖着长音痛哭不已。她那哭声弥漫开去，竟使得方圆一里之内的人们，无论男女老幼都为之动容，大家泪眼相向，愁眉不展，人人都难过得三天吃不下饭。后来，韩娥难以安身，便离开了这家旅店。人们发现之后，急急忙忙分头去追赶她，将她请回来，再为劳苦大众纵情高歌一曲。韩娥的热情演唱，又引得一里之内的老人和小孩个个欢呼雀跃，鼓掌助兴，大家忘情地沉浸在欢乐之中，将以往的许多人生悲苦都一扫而光。为了感谢韩娥给他们带来的欢乐，大家送给韩娥许多财物和礼品，使她满载而归。韩娥的故事说明：真正的艺术家，应当扎根于人民大众之中，与大众共悲欢，成为他们忠实的代言人。</p>#}
             </div>
         </div>
@@ -321,11 +316,7 @@
             <div class="chart"></div>
             <div class="panel-footer"></div>
         </div>
-        <div class="panel line2" id="l2">
-            <h2>文本特征熵分析</h2>
-            <div class="chart"></div>
-            <div class="panel-footer"></div>
-        </div>
+
         <div class="panel pie2" id="p2">
             <h2>文本重要词性分布</h2>
             <div class="chart">图表</div>
@@ -349,9 +340,40 @@
 
     <script type="text/javascript">
             $(document).ready(function() {
-
                 //获取原文本
                 var this_text = "{{ content }}";
+                var times = []
+
+                {% for f in range(0,imgs) %}
+                    var this_role = "{{ img_name[f] }}".split(".")[0]
+                    console.log("this_role:",this_role)
+                    var reg = new RegExp(this_role, "gmi");
+                    //使用正则表达式计算角色在文本中出现的词数
+                     var reg_count = this_text.match(reg);
+                     var counts = reg_count.length;
+                     times.push(counts)
+
+                {% endfor %}
+
+
+
+                console.log("totle_counts:",times.sort())
+                var new_times = times.sort()
+
+                {#for (var i = 0; i<new_times.length; i++){#}
+                {#    var value = "{{ img_name[i] }}"#}
+                {#    console.log(value)#}
+                {#    var s1 = '<button class="log1_b" id = "log1_btn"  value='#}
+                {#    var s2 = '><img id = "this_role" src="../static/img/'#}
+                {#    var s3 = '" height="100px"></button>'#}
+                {#    var strs = s1 + value + s2 + value + s3#}
+                {#    console.log(strs)#}
+                {##}
+                {#    document.getElementById("image-box-id").innerHTML = strs#}
+                {#}#}
+
+
+
                 //定义删除数组某元素方法
                 Array.prototype.indexOf = function(val) {
                     for (var i = 0; i < this.length; i++) {
@@ -369,11 +391,13 @@
                 var selected =[];
                 $(".log1_b").click(function() {
 
+
                     //获取鼠标点击哪个button
                     var role_clicked = $(this).val();
 
                     //如果角色button第2n次被选中
                     if (selected.includes(role_clicked)){
+                        $(this).css("outline","none");
                         console.log(role_clicked+" Has already");
                         //角色选中数组中移除该角色
                         selected.remove(role_clicked);
@@ -391,6 +415,7 @@
                         return false
 
                     } else{ ////如果角色button第1n次被选中
+                        $(this).css("outline","auto");
                         selected.push(role_clicked);
                         // 设定获取主角关键字的正则表达式
                         var reg = new RegExp(role_clicked.split(".")[0], "gmi");
@@ -416,6 +441,7 @@
                     //使用正则表达式计算角色在文本中出现的词数
                      var reg_count = this_text.match(reg);
                      var counts = reg_count.length;
+                     console.log(reg_count.length);
                      var data = "出现词数："+counts;
                      var tooltipHtml = "<div id='tooltip' class='tooltip'>"+data+"</div>";
                      $(this).append(tooltipHtml); //添加到页面中
@@ -449,6 +475,17 @@
                     });
             })
         </script>
+
+    <div class = "waterfall-height-css" >
+            <div class="image-box" id="image-box-id" v-for="img in imgList" :key="button">
+
+                {% for f in new_times %}
+
+                    <button class="log1_b" name="test{{ f }}" id = 'log1_btn'  value="{{ img_name[f] }}"><img id = "this_role" src="../static/img/{{ img_name[f] }}" height="100px"></button>
+                {% endfor %}
+
+            </div>
+        </div>
 </div>
 <div id="log2">
 </div>
@@ -489,16 +526,9 @@
     </div>
 </div>
 {#浮窗左二#}
-<div id="log3"></div>
-<div id="login3">
 
-    <form action="" id = "log3_form"><h2>故事摘要</h2>从前，韩国有位歌唱家名叫韩娥，要到位于东方的齐国去，不想在半路上就断了钱粮，从而使基本生活都发生了困难。人们发现之后，急急忙忙分头去追赶她，将她请回来，再为劳苦大众纵情高歌一曲。</form>
-</div>
 {#浮窗右二#}
-<div id="log4"></div>
-<div id="login4">
-    <form action=""></form>
-</div>
+
 {#浮窗左三#}
 <div id="log5"></div>
 <div id="login5">
@@ -1702,6 +1732,25 @@ s<!-- 先引入jquery -->
     })
 
 
+</script>
+{#更多收起#}
+<script>
+    $(function () {
+                        $(".baba1").click(function () {
+                            $(".baba1").hide()
+                            $(".baba2").show()
+                            $("#text_content_init").hide()
+                            $("#text_content").show()
+                            $(".nui-scroll").css("height"," 500px")
+                        })
+                        $(".baba2").click(function () {
+                            $(".baba2").hide()
+                            $(".baba1").show()
+                            $("#text_content_init").show()
+                            $("#text_content").hide()
+                            $(".nui-scroll").css("height","85px")
+                        })
+                    })
 </script>
 </body>
 </html>

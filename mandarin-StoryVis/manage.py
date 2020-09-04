@@ -10,6 +10,7 @@ from dingwei import Dw
 from flask_cors import CORS
 from flask import  jsonify
 import json
+import re
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 CORS(app, resources=r'/*')
@@ -30,7 +31,6 @@ def main():
         # print(a)
         titles = main_mod(all_title)  # titles获得推荐的故事题目
         title = titles[0]  # 因为titles是个列表，里面的故事题目有4个，就选取每次推荐的第一个，来进行可视化的展示
-
         print(title)  # title是最后展现的故事题目
         html_1 = 'index.html'
     else:
@@ -72,10 +72,24 @@ def main():
     # print(fenye_pages_xi_k) #打印词性的键
     # print(len_fen_xi_v)
 
-    pn_color,content,all_color,fcolor,tcolor,all_num,word, imgs, img_name, propertys, pro_name, pro_number, \
+    pn_color,content,all_color,fcolor,tcolor,all_num,word, imgs, im_name, propertys, pro_name, pro_number, \
     pro_num, entropy_num, readability_num_1, readability_num_2, readability_num_3, readability_num_4, readability_num_5, \
     readability_num_6, readability_num_7, readability_num_8, readability_num_9, length_p = mode.models_mysql(
     title)
+    count_dict = {}
+    img_name = []
+    for name in im_name:
+        reg = name.split('.')[0]
+        print("reg",reg)
+        times = content.count(reg)
+        print(times)
+        count_dict[name] = times
+    new_dict = sorted(count_dict.items(), key = lambda item:item[1], reverse=True)
+    #print(new_dict)
+    for ele in new_dict:
+        img_name.append(ele[0])
+    #print(img_name)
+
 
     return render_template('index.html', **locals())
 
