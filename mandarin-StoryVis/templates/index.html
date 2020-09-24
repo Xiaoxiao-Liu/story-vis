@@ -20,6 +20,7 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <script>
+        window.text = "{{ content }}"
         {#    词性条形图循环#}
 {#        条形图搜索框初始值为空#}
         var gldata = "";
@@ -174,25 +175,8 @@
 <!-- 头部的盒子 -->
 <header>
     <br>
-    <h1>文本推送</h1>
-    <div class="showTime"></div>
-    <script>
-        var t = null;
-        t = setTimeout(time, 1000); //开始运行
-        function time() {
-            clearTimeout(t); //清除定时器
-            dt = new Date();
-            var y = dt.getFullYear();
-            var mt = dt.getMonth() + 1;
-            var day = dt.getDate();
-            var h = dt.getHours(); //获取时
-            var m = dt.getMinutes(); //获取分
-            var s = dt.getSeconds(); //获取秒
-            document.querySelector(".showTime").innerHTML =
-                "当前时间：" + y + "年" + mt + "月" + day + "-" + h + "时" + m + "分" + s + "秒";
-            t = setTimeout(time, 1000); //设定定时器，循环运行
-        }
-    </script>
+    <h1>儿童故事文本推送可视化</h1>
+
 </header>
 
 <!-- 页面主体部分 -->
@@ -216,97 +200,125 @@
     </div>
 
     <div class="column" >
-        {#        搜索框#}
-        <div class="search bar7" id="column_place">
+        <div class="search_n_content" id="middle1">
 
-            <form onSubmit="submitFn(this, event);">
-{#                <div class="inp-holder">#}
-                <input type="text" id="title" placeholder="请输入关键词" >
-                <button id="loginBtn"></button>
-{#                </div>#}
-                <div class="result-container">
+            {#        搜索框#}
+            <div class="search bar7" id="column_place">
 
+                <form onSubmit="submitFn(this, event);">
+                    <div class="search-wrappers" id="frame_div">
+                         <div class="input-holders" id="input_holder-id">
+    {#                <div class="inp-holder">#}
+                    <input type="text" id="title" placeholder="请输入关键词" >
+                    <button id="searchBtn"></button>
                     </div>
-            </form>
-            <script type="text/javascript">
-                function submitFn(obj, evt){
-                    var this_text = "{{ content }}";
-                    var key_words = $(obj).find("#title").val();
-                    {#console.log(text_input);#}
-                    {#alert("Worked")#}
-
-                    var reg = new RegExp(key_words, "gmi");
-                    //设定替换图像在文本中的内容
-                    var replaced_cont = '<mark>'+key_words+'</mark>'
-                    //var reg_count = this_text.match(reg);
-                    //使用正则方法将文本中的主角替换为图像
-                    this_text = this_text.replace(reg, replaced_cont)
-                    //刷新局部文本框
-                    $("#text_content").html(this_text);
-                    evt.preventDefault();
-                    // 保证不刷新页面，只刷新局部文本内容
-                    {#return false;#}
-                    $("#column_place").click(function() {
-                     var new_text = "{{ content }}";
-                     $("#text_content").html(new_text);
-                     {#return false;#}
-                  })
-
-                }
-
-
-                </script>
-
-            <form action="/" method="post">
-                <div class="search-wrapper">
-                    <div class="input-holder">
-                        <input type="text" class="search-input" id="title" placeholder="想读什么样的故事呢？" name="crid"/>
-                        <button class="search-icon" onClick="searchToggle(this, event);"><span></span></button>
-
-                    </div>
-                    <span class="close" onClick="searchToggle(this, event);"></span>
                     <div class="result-container">
 
+                        </div>
+                        </div>
+                </form>
+                <script type="text/javascript">
+                    function submitFn(obj, evt){
+                        var this_text = "{{ content }}";
+                        var key_words = $(obj).find("#title").val();
+                        {#console.log(text_input);#}
+                        {#alert("Worked")#}
+
+                        var reg = new RegExp(key_words, "gmi");
+                        //设定替换图像在文本中的内容
+                        var replaced_cont = '<mark>'+key_words+'</mark>'
+                        //var reg_count = this_text.match(reg);
+                        //使用正则方法将文本中的主角替换为图像
+                        this_text = this_text.replace(reg, replaced_cont)
+                        //刷新局部文本框
+                        $("#text_content").html(this_text);
+                        evt.preventDefault();
+                        // 保证不刷新页面，只刷新局部文本内容
+                        {#return false;#}
+                        $("#column_place").click(function() {
+                         var new_text = "{{ content }}";
+                         $("#text_content").html(new_text);
+                         {#return false;#}
+                      })
+
+                    }
+
+
+                    </script>
+
+                <form action="/" method="post">
+                    <div class="search-wrapper" id="frame_div">
+                        <div class="input-holder" id="input_holder-id">
+                            <input type="text" class="search-input" id="title" placeholder="想读什么样的故事呢？" name="crid"/>
+                            <button class="search-icon"  onClick="searchToggle(this, event);"><span></span></button>
+
+                        </div>
+                        <span class="close" onClick="searchToggle(this, event);"></span>
+                        <div class="result-container">
+
+                        </div>
                     </div>
-                </div>
-            </form>
-            <script type="text/javascript">
-                function searchToggle(obj, evt){
-                    var container = $(obj).closest('.search-wrapper');
+                </form>
+                <script type="text/javascript">
+                    function searchToggle(obj, evt){
+                        var container = $(obj).closest('.search-wrapper');
 
-                    if(!container.hasClass('active')){
-                          container.addClass('active');
-                          evt.preventDefault();
+                        if(!container.hasClass('active')){
+                              container.addClass('active');
+                              evt.preventDefault();
+                        }
+                        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+                              container.removeClass('active');
+                              // clear input
+                              container.find('.search-input').val('');
+                              // clear and hide result container when we press close
+                              container.find('.result-container').fadeOut(100, function(){$(this).empty();});
+                        }
                     }
-                    else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
-                          container.removeClass('active');
-                          // clear input
-                          container.find('.search-input').val('');
-                          // clear and hide result container when we press close
-                          container.find('.result-container').fadeOut(100, function(){$(this).empty();});
-                    }
-                }
 
-                </script>
+                    </script>
 
-            <br><br>
+                <br><br>
 
-        </div>
-        <h1 style="text-align: center;font-size: 28px;">{{ title }}</h1>
-        {#        原文框#}
-        <div class=text_con style="position: relative;"><br><br><br>
-            <div class="baba1" style="cursor: pointer;display: inline;color: #000;position: absolute;left: 230px;top: 170px;">阅读全文&nbsp;<img style="height: 10px;width: 10px;" src="../static/images/jiantouxia.png"></div>
-            <div class="baba2" style="cursor: pointer;display: none;color: #000;position: absolute;left: 230px;top: 585px;">收起&nbsp;<img style="height: 10px;width: 10px;" src="../static/images/jiantousahng.png"></div>
+            </div>
 
-            <h2 style="color:#000; ">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;故事内容：</h2><br>
-            <div class="nui-scroll"  id="pretime">
-                <p id="text_content_init" style="color:#000000;font-size:0.3rem;  display: block;">从前有一只狐狸,一直住在一座高山的洞穴里,在孤寂冷漠中艰难地苦度晚年.它生育出来的小狐狸,每当发育成熟时,都被它当作.....</p>
-                <p id="text_content" style="color:#000000;font-size:0.3rem; display: none;padding-bottom: 10px">{{ content }}</p>
 
-                {#                <p>&nbsp;&nbsp;&nbsp;&nbsp;从前，韩国有位歌唱家名叫韩娥，要到位于东方的齐国去，不想在半路上就断了钱粮，从而使基本生活都发生了困难。为了度过这一难关，她在经过齐国都城西边的雍门时，便用卖唱来换取食物。韩娥唱起歌来，情感是相当投入的，以至在她离开了这个地方以后，她那美妙绝伦的余音还仿佛在城门的梁柱之间缭绕，竟至三日不绝于耳；凡是聆听过韩娥歌唱的人，都还沉浸在她所营造的艺术氛围之中，好像她并没有离开一样。有一天，韩娥来到一家旅店投宿时，店小二狗眼看人，见她穷愁潦倒，便当众羞辱她。韩娥为此伤心至极，禁不住拖着长音痛哭不已。她那哭声弥漫开去，竟使得方圆一里之内的人们，无论男女老幼都为之动容，大家泪眼相向，愁眉不展，人人都难过得三天吃不下饭。后来，韩娥难以安身，便离开了这家旅店。人们发现之后，急急忙忙分头去追赶她，将她请回来，再为劳苦大众纵情高歌一曲。韩娥的热情演唱，又引得一里之内的老人和小孩个个欢呼雀跃，鼓掌助兴，大家忘情地沉浸在欢乐之中，将以往的许多人生悲苦都一扫而光。为了感谢韩娥给他们带来的欢乐，大家送给韩娥许多财物和礼品，使她满载而归。韩娥的故事说明：真正的艺术家，应当扎根于人民大众之中，与大众共悲欢，成为他们忠实的代言人。</p>#}
+            {#        原文框#}
+            <div class="content frame" id="content1">
+
+                <div id="story_title" ><h1 id="story_t" style="text-align: center;font-size: 28px;">{{ title }}</h1></div>
+
+                    <div class=text_con style="position: relative;">
+                        <div class="baba1" id="read_more" style="cursor: pointer;display: inline;color: #000;position: absolute;left: 230px;top: 170px;">阅读全文&nbsp;<img style="height: 10px;width: 10px;" src="../static/images/jiantouxia.png"></div>
+                        <div class="baba2" id="show_abstract" style="cursor: pointer;display: none;color: #000;position: absolute;left: 230px;top: 585px;">收起&nbsp;<img style="height: 10px;width: 10px;" src="../static/images/jiantousahng.png"></div>
+                        <div class="nui-scroll"  id="pretime" style="height:5.4rem;">
+                            <p id="text_content_init" style="color:#000000;font-size:0.3rem;  display: block;">从前有一只狐狸,一直住在一座高山的洞穴里,在孤寂冷漠中艰难地苦度晚年.它生育出来的小狐狸,每当发育成熟时,都被它当作.....</p>
+                            <p id="text_content" style="color:#000000;font-size:0.3rem; display: none;padding-bottom: 10px">{{ content }}</p>
+                        </div>
+                        {#更多收起#}
+                        <script>
+                            $(function () {
+                                                $(".baba1").click(function () {
+                                                    $(".baba1").hide()
+                                                    $(".baba2").show()
+                                                    $("#text_content_init").hide()
+                                                    $("#text_content").show()
+                                                    $(".nui-scroll").css("height"," 7.5rem")
+                                                })
+                                                $(".baba2").click(function () {
+                                                    $(".baba2").hide()
+                                                    $(".baba1").show()
+                                                    $("#text_content_init").show()
+                                                    $("#text_content").hide()
+                                                    $(".nui-scroll").css("height","85px")
+                                                })
+                                            })
+                        </script>
+                    </div>
             </div>
         </div>
     </div>
+
     <!-- 中间空白的地方，也是浮动窗口定位的地方 -->
     <div class="map"></div>
 
@@ -355,25 +367,8 @@
 
                 {% endfor %}
 
-
-
                 console.log("totle_counts:",times.sort())
                 var new_times = times.sort()
-
-                {#for (var i = 0; i<new_times.length; i++){#}
-                {#    var value = "{{ img_name[i] }}"#}
-                {#    console.log(value)#}
-                {#    var s1 = '<button class="log1_b" id = "log1_btn"  value='#}
-                {#    var s2 = '><img id = "this_role" src="../static/img/'#}
-                {#    var s3 = '" height="100px"></button>'#}
-                {#    var strs = s1 + value + s2 + value + s3#}
-                {#    console.log(strs)#}
-                {##}
-                {#    document.getElementById("image-box-id").innerHTML = strs#}
-                {#}#}
-
-
-
                 //定义删除数组某元素方法
                 Array.prototype.indexOf = function(val) {
                     for (var i = 0; i < this.length; i++) {
@@ -442,13 +437,13 @@
                      var reg_count = this_text.match(reg);
                      var counts = reg_count.length;
                      console.log(reg_count.length);
-                     var data = "出现词数："+counts;
+                     var data = "出现次数："+counts;
                      var tooltipHtml = "<div id='tooltip' class='tooltip'>"+data+"</div>";
                      $(this).append(tooltipHtml); //添加到页面中
                      $("#tooltip").css({
                         "width": "120px",
-                        "background-color": "black",
-                        "color": "#fff",
+                        "background-color": "#fff",
+                        "color": "black",
                         "text-align": "center",
                         "border-radius": "6px",
                         "padding": "5px",
@@ -1733,24 +1728,6 @@ s<!-- 先引入jquery -->
 
 
 </script>
-{#更多收起#}
-<script>
-    $(function () {
-                        $(".baba1").click(function () {
-                            $(".baba1").hide()
-                            $(".baba2").show()
-                            $("#text_content_init").hide()
-                            $("#text_content").show()
-                            $(".nui-scroll").css("height"," 500px")
-                        })
-                        $(".baba2").click(function () {
-                            $(".baba2").hide()
-                            $(".baba1").show()
-                            $("#text_content_init").show()
-                            $("#text_content").hide()
-                            $(".nui-scroll").css("height","85px")
-                        })
-                    })
-</script>
+
 </body>
 </html>

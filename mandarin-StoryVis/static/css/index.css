@@ -1,6 +1,4 @@
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
@@ -61,21 +59,92 @@ header .showTime {
     flex: 3;
 }
 
+
 .mainbox .column:nth-child(2) {
     flex: 5;
-    margin: 0 0.125rem 0.1875rem;
+    margin: 0 0.18rem 0.1875rem;
     overflow: hidden;
 }
 
-.panel {
+/*.panel {*/
+    /*position: relative;*/
+    /*height: 3.875rem;*/
+    /*border: 1px solid #02a6b5;*/
+    /*background: rgba(255, 255, 255, 0.04) url(../images/line.png);*/
+    /*padding: 0 0.8rem 5rem;*/
+
+    /*margin-bottom: 1.18rem;*/
+/*}*/
+
+
+#b1 {
     position: relative;
     height: 3.875rem;
-    border: 1px solid #02a6b5;
+    width: 7rem;
+    border: 1px solid #2ca70a;
     background: rgba(255, 255, 255, 0.04) url(../images/line.png);
     padding: 0 0.8rem 5rem;
+    margin-bottom: 0.18rem;
+}
 
+#p1 {
+    position: relative;
+    height: 3.875rem;
+    width: 7rem;
+    border: 1px solid #ff840a;
+    background: rgba(255, 255, 255, 0.04) url(../images/line.png);
+    padding: 0 0.8rem 5rem;
+    margin-bottom: 0.18rem;
+}
+
+#b2 {
+    position: relative;
+    height: 3.875rem;
+    width: 7rem;
+    border: 1px solid #019ddb;
+    background: rgba(255, 255, 255, 0.04) url(../images/line.png);
+    padding: 0 0.8rem 5rem;
+    margin-bottom: 0.18rem;
+}
+
+#p2 {
+    position: relative;
+    height: 3.875rem;
+    width: 7rem;
+    border: 1px solid #f585b4;
+    background: rgba(255, 255, 255, 0.04) url(../images/line.png);
+    padding: 0 0.8rem 5rem;
+    margin-bottom: 0.18rem;
+}
+
+#content1{
+    margin: 0.1rem;
+    height: 6.7rem;
+}
+
+#middle1 {
+    position: relative;
+    height: 10.3rem;
+    border: 1px solid;
+    background: rgba(255, 255, 255, 0.04) url(../images/line.png);
+    padding: 0.1rem;
     margin-bottom: 1.18rem;
 }
+
+#story_title {
+    margin: 0.1rem;
+    height: 0.6rem;
+}
+
+#story_t {
+    font-size:25px;
+    margin: 0.1rem;
+    text-align: center;
+    font-size: 28px;
+    color: #a64942;
+}
+
+
 
 .panel::before {
     position: absolute;
@@ -267,11 +336,18 @@ header .showTime {
 }
 
 .text_con {
-    width: 480px;
-    height: 700px;
-    margin: 0 auto;
+    margin: 0.1rem;
+    height: 8rem;
+    border: 0.1px solid #89729E;
 }
 
+#text_content {
+    margin: 0.1rem;
+    height: 7.6rem;
+    color: rgb(0, 0, 0);
+    font-size: 0.3rem;
+    padding-bottom: 1px;
+}
 #this_role:hover {
     /*悬停时变大*/
     transform: scale(1.5);
@@ -445,6 +521,8 @@ header .showTime {
 
 div.search {
     padding: 10px 0;
+    margin: 0.17rem;
+    height: 1rem;
 }
 
 form {
@@ -480,7 +558,7 @@ button {
 
 .bar7 input {
     border-radius: 50px;
-    border: 36px solid #EEEEEE;
+    border: 6px solid #EEEEEE;
     width: 305px;
     height: 70px;
     background: rgb(255, 255, 255);
@@ -511,11 +589,10 @@ button {
 
 
 .nui-scroll {
-    border: 1px solid #00000036;
-    width: 550px;
-    height: 85px;
+    margin: 0.1rem;
+    border: 0.1px #89729E;
+    height: 5.4rem;
     overflow: auto;
-
 }
 
 .nui-scroll::-webkit-scrollbar {

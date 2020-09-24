@@ -37,7 +37,7 @@ body {
     width: 305px;
     background:#EEE;
     /*新加*/
-    top: 15px;
+    top: -115px;
     right: 211px;
     /*新加*/
     -webkit-transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);
