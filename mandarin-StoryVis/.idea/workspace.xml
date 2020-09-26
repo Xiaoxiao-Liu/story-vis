@@ -10,7 +10,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/mandarin_StoryVis$manage.coverage" NAME="manage Coverage Results" MODIFIED="1600941637348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mandarin_StoryVis$manage.coverage" NAME="manage Coverage Results" MODIFIED="1601090581493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/$fenye__1_.coverage" NAME="fenye (1) Coverage Results" MODIFIED="1591498771395" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/$manage.coverage" NAME="manage Coverage Results" MODIFIED="1598421366145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/$.coverage" NAME="根据词数分页 Coverage Results" MODIFIED="1591671591273" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -21,6 +21,7 @@
     <SUITE FILE_PATH="coverage/$Flask__manage_py_.coverage" NAME="Flask (manage.py) Coverage Results" MODIFIED="1594736684844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/$fenye.coverage" NAME="fenye Coverage Results" MODIFIED="1590992770562" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gushifenye" />
     <SUITE FILE_PATH="coverage/$dingwei.coverage" NAME="dingwei Coverage Results" MODIFIED="1594644244720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mandarin_StoryVis$models.coverage" NAME="models Coverage Results" MODIFIED="1600951200909" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/$app.coverage" NAME="app Coverage Results" MODIFIED="1587284721495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/$fenxiG.coverage" NAME="fenxiG Coverage Results" MODIFIED="1594627021563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/$fenxi.coverage" NAME="fenxi Coverage Results" MODIFIED="1594349472454" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -49,8 +50,8 @@
       <file leaf-file-name="manage.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/manage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+            <state relative-caret-position="180">
+              <caret line="96" column="34" lean-forward="false" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -58,14 +59,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="205">
+              <caret line="249" column="43" lean-forward="true" selection-start-line="249" selection-start-column="43" selection-end-line="249" selection-end-column="43" />
+              <folding>
+                <marker date="1601033535343" expanded="true" signature="334:544" ph="SELECT disti... word_table" />
+                <marker date="1601033535343" expanded="true" signature="2449:2688" ph="SELECT w.chi... word_table" />
+                <marker date="1601033535343" expanded="true" signature="4929:5163" ph="SELECT w.wor... word_table" />
+                <marker date="1601033535343" expanded="true" signature="5537:5825" ph="SELECT w.chi... p_c" />
+                <marker date="1601033535343" expanded="true" signature="6428:6561" ph="SELECT emtio... text_table" />
+                <marker date="1601033535343" expanded="true" signature="6721:6824" ph="SELECT r.* f... readability_table" />
+                <marker date="1601033535343" expanded="true" signature="7459:7519" ph="SELECT img_n... text_table" />
+                <marker date="1601033535343" expanded="true" signature="7744:7881" ph="SELECT c.tex... text_content_table" />
+                <marker date="1601033535343" expanded="true" signature="7798:7853" ph="SELECT * FRO... text_table" />
+                <marker date="1601033535343" expanded="true" signature="8231:8466" ph="SELECT disti... word_table" />
+                <marker date="1601033535343" expanded="true" signature="8614:8853" ph="SELECT disti... word_table" />
+                <marker date="1601033535343" expanded="true" signature="9008:9034" ph="SELECT c4 fr... color_table" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="185" column="28" lean-forward="true" selection-start-line="185" selection-start-column="28" selection-end-line="185" selection-end-column="28" />
-              <folding>
-                <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="131">
+              <caret line="212" column="43" lean-forward="false" selection-start-line="212" selection-start-column="43" selection-end-line="212" selection-end-column="43" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -73,8 +95,8 @@
       <file leaf-file-name="search-form.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/search-form.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3330">
-              <caret line="222" column="1" lean-forward="false" selection-start-line="222" selection-start-column="1" selection-end-line="222" selection-end-column="1" />
+            <state relative-caret-position="-1388">
+              <caret line="84" column="7" lean-forward="false" selection-start-line="84" selection-start-column="1" selection-end-line="84" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -83,8 +105,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="1010" column="0" lean-forward="true" selection-start-line="1010" selection-start-column="0" selection-end-line="1010" selection-end-column="0" />
+            <state relative-caret-position="15120">
+              <caret line="1010" column="0" lean-forward="false" selection-start-line="1010" selection-start-column="0" selection-end-line="1010" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -95,8 +117,8 @@
       <file leaf-file-name="index.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="343" column="15" lean-forward="true" selection-start-line="343" selection-start-column="15" selection-end-line="343" selection-end-column="15" />
+            <state relative-caret-position="64">
+              <caret line="323" column="45" lean-forward="true" selection-start-line="323" selection-start-column="45" selection-end-line="323" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -116,13 +138,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>p2</find>
-      <find>pretime</find>
-      <find>狐狸和乌鸦</find>
-      <find>text_con</find>
-      <find>baba1</find>
-      <find>$</find>
-      <find>baba</find>
       <find>div/.</find>
       <find>文本推送</find>
       <find>h1</find>
@@ -135,7 +150,6 @@
       <find>i</find>
       <find>search-wrapper</find>
       <find>search-input</find>
-      <find>search</find>
       <find>title</find>
       <find>.searh</find>
       <find>input-holder</find>
@@ -146,6 +160,14 @@
       <find>img_name</find>
       <find>#text_content {</find>
       <find>nui-sc</find>
+      <find>showtime</find>
+      <find>.search-wrapper.active .input-holder</find>
+      <find>.search-wrapper.active .input-holder {</find>
+      <find>all_color</find>
+      <find>mode</find>
+      <find>print</find>
+      <find>searchBtn</find>
+      <find>search</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/children_story_model</dir>
@@ -177,11 +199,11 @@
         <option value="$PROJECT_DIR$/zishuG.py" />
         <option value="$PROJECT_DIR$/zishu.py" />
         <option value="$PROJECT_DIR$/dingwei.py" />
-        <option value="$PROJECT_DIR$/models.py" />
         <option value="$PROJECT_DIR$/manage.py" />
-        <option value="$PROJECT_DIR$/static/css/search-form.css" />
         <option value="$PROJECT_DIR$/static/js/index.js" />
         <option value="$PROJECT_DIR$/static/css/index.css" />
+        <option value="$PROJECT_DIR$/models.py" />
+        <option value="$PROJECT_DIR$/static/css/search-form.css" />
         <option value="$PROJECT_DIR$/templates/index.html" />
       </list>
     </option>
@@ -193,10 +215,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="518" />
-    <option name="y" value="27" />
-    <option name="width" value="757" />
-    <option name="height" value="662" />
+    <option name="x" value="80" />
+    <option name="y" value="38" />
+    <option name="width" value="1044" />
+    <option name="height" value="713" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -308,7 +330,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="zishu" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="models" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -320,8 +342,8 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="文本交互可视化" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/zishu.py" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/models.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -345,17 +367,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.dingwei" />
       <item index="1" class="java.lang.String" itemvalue="Python.fenxiG" />
-      <item index="2" class="java.lang.String" itemvalue="Python.zishu" />
-      <item index="3" class="java.lang.String" itemvalue="Python.manage" />
-      <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <item index="2" class="java.lang.String" itemvalue="Python.manage" />
+      <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <item index="4" class="java.lang.String" itemvalue="Python.models" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.manage" />
-        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
-        <item index="2" class="java.lang.String" itemvalue="Python.dingwei" />
-        <item index="3" class="java.lang.String" itemvalue="Python.fenxiG" />
-        <item index="4" class="java.lang.String" itemvalue="Python.zishu" />
+        <item index="1" class="java.lang.String" itemvalue="Python.models" />
+        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+        <item index="3" class="java.lang.String" itemvalue="Python.dingwei" />
+        <item index="4" class="java.lang.String" itemvalue="Python.fenxiG" />
       </list>
     </recent_temporary>
   </component>
@@ -495,18 +517,19 @@
     <option name="totallyTimeSpent" value="586649000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="518" y="27" width="757" height="662" extended-state="0" />
+    <frame x="80" y="38" width="1044" height="713" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6558642" sideWeight="0.2180053" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28474575" sideWeight="0.7819947" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26209047" sideWeight="0.7819947" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956153" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956153" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1300268" sideWeight="0.67043847" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297587" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32293293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297587" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12868632" sideWeight="0.32956153" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39814815" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -517,7 +540,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Database Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32390383" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -552,7 +574,14 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/manage.py</url>
+          <line>79</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -585,9 +614,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4605">
           <caret line="307" column="15" lean-forward="false" selection-start-line="307" selection-start-column="9" selection-end-line="307" selection-end-column="15" />
-          <folding>
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -634,9 +661,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22155">
           <caret line="1477" column="29" lean-forward="true" selection-start-line="1473" selection-start-column="26" selection-end-line="1477" selection-end-column="29" />
-          <folding>
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -654,9 +679,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19770">
           <caret line="1318" column="42" lean-forward="false" selection-start-line="1318" selection-start-column="42" selection-end-line="1318" selection-end-column="42" />
-          <folding>
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -674,9 +697,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="12" lean-forward="true" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
-          <folding>
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -701,9 +722,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18210">
           <caret line="1214" column="31" lean-forward="false" selection-start-line="1214" selection-start-column="31" selection-end-line="1214" selection-end-column="31" />
-          <folding>
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -846,16 +865,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5060">
-          <caret line="230" column="15" lean-forward="false" selection-start-line="230" selection-start-column="15" selection-end-line="230" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#21#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/children_story_model/uils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
@@ -877,28 +886,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/search-form.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3330">
-          <caret line="222" column="1" lean-forward="false" selection-start-line="222" selection-start-column="1" selection-end-line="222" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="1010" column="0" lean-forward="true" selection-start-line="1010" selection-start-column="0" selection-end-line="1010" selection-end-column="0" />
+        <state relative-caret-position="15120">
+          <caret line="1010" column="0" lean-forward="false" selection-start-line="1010" selection-start-column="0" selection-end-line="1010" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -907,18 +898,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/index.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="343" column="15" lean-forward="true" selection-start-line="343" selection-start-column="15" selection-end-line="343" selection-end-column="15" />
+        <state relative-caret-position="64">
+          <caret line="323" column="45" lean-forward="true" selection-start-line="323" selection-start-column="45" selection-end-line="323" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/search-form.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1388">
+          <caret line="84" column="7" lean-forward="false" selection-start-line="84" selection-start-column="1" selection-end-line="84" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="185" column="28" lean-forward="true" selection-start-line="185" selection-start-column="28" selection-end-line="185" selection-end-column="28" />
+        <state relative-caret-position="131">
+          <caret line="212" column="43" lean-forward="false" selection-start-line="212" selection-start-column="43" selection-end-line="212" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="96" column="34" lean-forward="false" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
           <folding>
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="249" column="43" lean-forward="true" selection-start-line="249" selection-start-column="43" selection-end-line="249" selection-end-column="43" />
+          <folding>
+            <marker date="1601033535343" expanded="true" signature="334:544" ph="SELECT disti... word_table" />
+            <marker date="1601033535343" expanded="true" signature="2449:2688" ph="SELECT w.chi... word_table" />
+            <marker date="1601033535343" expanded="true" signature="4929:5163" ph="SELECT w.wor... word_table" />
+            <marker date="1601033535343" expanded="true" signature="5537:5825" ph="SELECT w.chi... p_c" />
+            <marker date="1601033535343" expanded="true" signature="6428:6561" ph="SELECT emtio... text_table" />
+            <marker date="1601033535343" expanded="true" signature="6721:6824" ph="SELECT r.* f... readability_table" />
+            <marker date="1601033535343" expanded="true" signature="7459:7519" ph="SELECT img_n... text_table" />
+            <marker date="1601033535343" expanded="true" signature="7744:7881" ph="SELECT c.tex... text_content_table" />
+            <marker date="1601033535343" expanded="true" signature="7798:7853" ph="SELECT * FRO... text_table" />
+            <marker date="1601033535343" expanded="true" signature="8231:8466" ph="SELECT disti... word_table" />
+            <marker date="1601033535343" expanded="true" signature="8614:8853" ph="SELECT disti... word_table" />
+            <marker date="1601033535343" expanded="true" signature="9008:9034" ph="SELECT c4 fr... color_table" />
           </folding>
         </state>
       </provider>

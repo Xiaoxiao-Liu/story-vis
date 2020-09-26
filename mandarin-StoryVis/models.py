@@ -236,12 +236,27 @@ def models_mysql(title):
         all_color.append(row[0])
     #print(all_color)
 
+    # 摘要数据
+    '''
+    sql_21="SELECT abstract from text_content_table"
+    cur.execute(sql_21)
+    all_abstract = []
+    for abstract in cur.fetchall():
+        print(abstract)
+        all_abstract.abstract(row[0])
+    '''
+    #print(all_abstract)
+
     return pn_color,content,all_color,fcolor,tcolor,all_num,word,imgs,img_name,propertys,pro_name,pro_number,pro_num,entropy_num,readability_num_1,readability_num_2,readability_num_3,readability_num_4, readability_num_5,  readability_num_6, readability_num_7, readability_num_8, readability_num_9,length_p
 
-'''
 
+
+'''
 if __name__ == '__main__':
     title = "骗子与商人"
     data_for_vis(title)
-
+    models_mysql(title)
 '''
+
+
+
