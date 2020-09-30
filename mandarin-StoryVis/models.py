@@ -238,12 +238,12 @@ def models_mysql(title):
 
     # 摘要数据
     '''
-    sql_21="SELECT abstract from text_content_table"
+    sql_21 = "SELECT abstract from text_content_table"
     cur.execute(sql_21)
     all_abstract = []
     for abstract in cur.fetchall():
         print(abstract)
-        all_abstract.abstract(row[0])
+        all_abstract.append(abstract[0])
     '''
     #print(all_abstract)
 
@@ -252,10 +252,12 @@ def models_mysql(title):
 
 
 '''
+
 if __name__ == '__main__':
     title = "骗子与商人"
     data_for_vis(title)
     models_mysql(title)
+
 '''
 
 
